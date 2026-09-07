@@ -7,7 +7,7 @@ from flask import Flask, jsonify, render_template, request, session
 from groq import Groq
 from openai import OpenAI
 
-from database import (
+from .database import (
     initialize_database,
     create_user,
     authenticate_user,
