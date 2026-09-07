@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixFlow-AI | Smart IT Support</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #17345c 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #10294a 0%, transparent 30%),
+                #07111f;
+            color: #f5f9ff;
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 285px;
+            background: rgba(5, 14, 27, 0.94);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            padding: 22px 16px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 20;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 8px 22px;
+        }
+
+        .brand img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            border-radius: 14px;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-text span {
+            color: #8ea8c7;
+            font-size: 12px;
+        }
+
+        .new-session {
+            width: 100%;
+            border: 0;
+            border-radius: 13px;
+            padding: 13px 15px;
+            background: linear-gradient(135deg, #16c9ff, #1677ff);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(22,119,255,0.25);
+            margin-bottom: 20px;
+        }
+
+        .new-session:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(22,119,255,0.35);
+        }
+
+        .sidebar-title {
+            color: #6f87a5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 0 9px 9px;
+        }
+
+        .history {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            width: 100%;
+            text-align: left;
+            border: 0;
+            background: transparent;
+            color: #c5d3e4;
+            padding: 11px 10px;
+            border-radius: 10px;
+            margin-bottom: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .history-item:hover {
+            background: rgba(255,255,255,0.06);
+            color: white;
+        }
+
+        .sidebar-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 15px;
+        }
+
+        .account-button,
+        .logout-button {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: #afc0d4;
+            text-align: left;
+            padding: 10px;
+            border-radius: 9px;
+            margin-top: 3px;
+        }
+
+        .account-button:hover,
+        .logout-button:hover {
+            background: rgba(255,255,255,0.06);
+            color: white;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 285px;
+            width: calc(100% - 285px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            min-height: 72px;
+            padding: 15px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(15px);
+            background: rgba(7,17,31,0.55);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .topbar-title {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .provider {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #8fa7c2;
+            font-size: 13px;
+        }
+
+        .provider select {
+            background: #101f33;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 9px;
+            padding: 8px 11px;
+            outline: none;
+        }
+
+        /* CONTENT */
+
+        .content {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+            padding: 38px 28px 150px;
+            flex: 1;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .welcome-logo {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 10px 25px rgba(23,180,255,0.2));
+        }
+
+        .welcome h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            margin: 4px 0 8px;
+            letter-spacing: -1.5px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4edbff, #72a8ff, #c28bff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .welcome p {
+            color: #8fa7c2;
+            margin: 0 auto;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* CATEGORIES */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 0 14px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .section-heading span {
+            color: #7089a7;
+            font-size: 12px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(13,29,49,0.78);
+            border-radius: 15px;
+            padding: 17px;
+            color: white;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-3px);
+            border-color: rgba(63,207,255,0.45);
+            background: rgba(19,42,68,0.95);
+        }
+
+        .category:active {
+            transform: scale(0.98);
+        }
+
+        .category-icon {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .category strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .category span {
+            display: block;
+            color: #8098b4;
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        /* COMMON PROBLEMS */
+
+        .problems {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .problem {
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(11,24,41,0.65);
+            border-radius: 13px;
+            padding: 14px;
+            color: #c6d5e7;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .problem:hover {
+            background: rgba(255,255,255,0.06);
+            color: white;
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .problem:active {
+            transform: scale(0.98);
+        }
+
+        .problem-icon {
+            margin-right: 7px;
+        }
+
+        /* CHAT */
+
+        #chat {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #132a45;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 13px 16px;
+            border-radius: 15px;
+            background: #10233a;
+            color: #dbe8f6;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .user .bubble {
+            background: linear-gradient(135deg, #126acb, #1952a5);
+            color: white;
+        }
+
+        .typing {
+            color: #8ba2bc;
+            font-size: 13px;
+            padding: 4px 50px;
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.45;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* INPUT */
+
+        .composer {
+            position: fixed;
+            left: 285px;
+            right: 0;
+            bottom: 0;
+            padding: 15px 28px 20px;
+            background: linear-gradient(
+                to top,
+                #07111f 65%,
+                rgba(7,17,31,0)
+            );
+        }
+
+        .composer-inner {
+            width: min(850px, 100%);
+            margin: auto;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(13,29,49,0.96);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 17px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+        }
+
+        #messageInput {
+            flex: 1;
+            min-height: 45px;
+            max-height: 130px;
+            resize: none;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: white;
+            padding: 12px;
+        }
+
+        #messageInput::placeholder {
+            color: #617a97;
+        }
+
+        #sendButton {
+            width: 45px;
+            height: 45px;
+            border: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #16c9ff, #1677ff);
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        #sendButton:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .composer-note {
+            text-align: center;
+            color: #566d88;
+            font-size: 10px;
+            margin-top: 7px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 230px;
+            }
+
+            .main {
+                margin-left: 230px;
+                width: calc(100% - 230px);
+            }
+
+            .composer {
+                left: 230px;
+            }
+
+            .categories,
+            .problems {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .composer {
+                left: 0;
+                padding: 10px 12px 15px;
+            }
+
+            .topbar {
+                padding: 13px 15px;
+            }
+
+            .content {
+                padding: 25px 15px 145px;
+            }
+
+            .categories,
+            .problems {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .category {
+                padding: 13px;
+            }
+
+            .welcome-logo {
+                width: 85px;
+                height: 85px;
+            }
+
+            .bubble {
+                max-width: 88%;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .categories,
+            .problems {
+                grid-template-columns: 1fr;
+            }
+
+            .provider label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <img
+                src="{{ url_for('static', filename='fixflow-logo.png') }}"
+                alt="FixFlow-AI"
+            >
+
+            <div class="brand-text">
+                <strong>FixFlow-AI</strong>
+                <span>Smart IT Support</span>
+            </div>
+        </div>
+
+        <button class="new-session" id="newSessionButton">
+            ＋ New Support Session
+        </button>
+
+        <div class="sidebar-title">Recent Sessions</div>
+
+        <div class="history" id="history"></div>
+
+        <div class="sidebar-bottom">
+            <button class="account-button" id="accountButton">
+                👤 Account
+            </button>
+
+            <button class="logout-button" id="logoutButton">
+                ↪ Logout
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="topbar-title">
+                Smart IT Support
+            </div>
+
+            <div class="provider">
+
+                <label for="providerSelect">
+                    AI Provider
+                </label>
+
+                <select id="providerSelect">
+                    <option value="groq">Groq</option>
+                    <option value="openai">OpenAI</option>
+                </select>
+
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            <!-- WELCOME -->
+
+            <div class="welcome">
+
+                <img
+                    class="welcome-logo"
+                    src="{{ url_for('static', filename='fixflow-logo.png') }}"
+                    alt="FixFlow-AI"
+                >
+
+                <h1>
+                    Welcome to
+                    <span class="gradient-text">
+                        FixFlow-AI
+                    </span>
+                </h1>
+
+                <p>
+                    Your smart IT support assistant.
+                    Get simple, step-by-step help with computers,
+                    networks, software, devices, security, and more.
+                </p>
+
+            </div>
+
+            <!-- CATEGORIES -->
+
+            <div class="section-heading">
+
+                <h2>
+                    What can FixFlow-AI help with?
+                </h2>
+
+                <span>
+                    Click to get help
+                </span>
+
+            </div>
+
+            <div class="categories">
+
+                <button
+                    class="category"
+                    data-prompt="My computer or laptop is having a problem."
+                >
+                    <div class="category-icon">💻</div>
+
+                    <strong>
+                        Computer & Device
+                    </strong>
+
+                    <span>
+                        Slow computers, startup problems,
+                        keyboards, mice and more.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I am having an internet or network problem."
+                >
+                    <div class="category-icon">🌐</div>
+
+                    <strong>
+                        Internet & Network
+                    </strong>
+
+                    <span>
+                        Wi-Fi, internet, router, DNS
+                        and connection problems.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I am having a printer or scanner problem."
+                >
+                    <div class="category-icon">🖨️</div>
+
+                    <strong>
+                        Printers & Scanners
+                    </strong>
+
+                    <span>
+                        Offline printers, printing errors,
+                        drivers and scanners.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I am having an audio or video problem."
+                >
+                    <div class="category-icon">🔊</div>
+
+                    <strong>
+                        Audio & Video
+                    </strong>
+
+                    <span>
+                        Microphones, speakers, cameras,
+                        headphones and video.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I need help with my phone or another device."
+                >
+                    <div class="category-icon">📱</div>
+
+                    <strong>
+                        Phones & Devices
+                    </strong>
+
+                    <span>
+                        Bluetooth, device setup,
+                        connections and file transfers.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I have an IT security concern and need help."
+                >
+                    <div class="category-icon">🔐</div>
+
+                    <strong>
+                        Security
+                    </strong>
+
+                    <span>
+                        Phishing, suspicious emails,
+                        malware concerns and safety.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I am having a problem with software or an application."
+                >
+                    <div class="category-icon">📧</div>
+
+                    <strong>
+                        Software & Apps
+                    </strong>
+
+                    <span>
+                        Crashes, installation, updates,
+                        browsers and Office.
+                    </span>
+                </button>
+
+                <button
+                    class="category"
+                    data-prompt="I need help with an account or cloud service."
+                >
+                    <div class="category-icon">☁️</div>
+
+                    <strong>
+                        Accounts & Cloud
+                    </strong>
+
+                    <span>
+                        Login issues, cloud storage,
+                        syncing and accounts.
+                    </span>
+                </button>
+
+            </div>
+
+            <!-- COMMON PROBLEMS -->
+
+            <div class="section-heading">
+
+                <h2>
+                    Common IT problems
+                </h2>
+
+                <span>
+                    Click for instant help
+                </span>
+
+            </div>
+
+            <div class="problems">
+
+                <button
+                    class="problem"
+                    data-prompt="My computer has no internet."
+                >
+                    <span class="problem-icon">🌐</span>
+                    No internet
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="My computer is running very slowly."
+                >
+                    <span class="problem-icon">🐌</span>
+                    Slow computer
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="My printer is not printing."
+                >
+                    <span class="problem-icon">🖨️</span>
+                    Printer not working
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="My computer has no sound."
+                >
+                    <span class="problem-icon">🔇</span>
+                    No sound
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="My Wi-Fi keeps disconnecting."
+                >
+                    <span class="problem-icon">📶</span>
+                    Wi-Fi disconnecting
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="An application keeps crashing."
+                >
+                    <span class="problem-icon">⚠️</span>
+                    App crashing
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="My computer will not turn on."
+                >
+                    <span class="problem-icon">🔌</span>
+                    Computer won't turn on
+                </button>
+
+                <button
+                    class="problem"
+                    data-prompt="I received a suspicious email and I am worried it may be phishing."
+                >
+                    <span class="problem-icon">🔐</span>
+                    Suspicious email
+                </button>
+
+            </div>
+
+            <!-- CHAT -->
+
+            <div id="chat"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- MESSAGE COMPOSER -->
+
+<div class="composer">
+
+    <div class="composer-inner">
+
+        <textarea
+            id="messageInput"
+            placeholder="Describe your IT problem..."
+            rows="1"
+        ></textarea>
+
+        <button
+            id="sendButton"
+            title="Send"
+        >
+            ➤
+        </button>
+
+    </div>
+
+    <div class="composer-note">
+        FixFlow-AI can make mistakes.
+        Always verify important security or system changes.
+    </div>
+
+</div>
+
+<script>
+
+    const chat =
+        document.getElementById("chat");
+
+    const messageInput =
+        document.getElementById("messageInput");
+
+    const sendButton =
+        document.getElementById("sendButton");
+
+    const historyContainer =
+        document.getElementById("history");
+
+    const providerSelect =
+        document.getElementById("providerSelect");
+
+    let currentConversationId = null;
+
+    let isSending = false;
+
+
+    /* =========================
+       ADD MESSAGE
+    ========================= */
+
+    function addMessage(role, content) {
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            `message ${role}`;
+
+        const avatar =
+            document.createElement("div");
+
+        avatar.className =
+            "avatar";
+
+        if (role === "assistant") {
+
+            const img =
+                document.createElement("img");
+
+            img.src =
+                "{{ url_for('static', filename='fixflow-logo.png') }}";
+
+            img.alt =
+                "FixFlow-AI";
+
+            avatar.appendChild(img);
+
+        } else {
+
+            avatar.textContent =
+                "👤";
+
+        }
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className =
+            "bubble";
+
+        bubble.textContent =
+            content;
+
+        if (role === "user") {
+
+            row.appendChild(bubble);
+            row.appendChild(avatar);
+
+        } else {
+
+            row.appendChild(avatar);
+            row.appendChild(bubble);
+
+        }
+
+        chat.appendChild(row);
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+    }
+
+
+    /* =========================
+       WELCOME
+    ========================= */
+
+    function showWelcome() {
+
+        chat.innerHTML = "";
+
+        addMessage(
+            "assistant",
+            "Hi! I'm FixFlow-AI. Tell me what IT problem you're experiencing, and I'll guide you through it step by step."
+        );
+    }
+
+
+    /* =========================
+       INPUT
+    ========================= */
+
+    function setInput(text) {
+
+        messageInput.value =
+            text;
+
+        messageInput.focus();
+
+        messageInput.style.height =
+            "auto";
+
+        messageInput.style.height =
+            Math.min(
+                messageInput.scrollHeight,
+                130
+            ) + "px";
+    }
+
+
+    /* =========================
+       HISTORY
+    ========================= */
+
+    async function loadHistory() {
+
+        try {
+
+            const response =
+                await fetch("/history");
+
+            const data =
+                await response.json();
+
+            historyContainer.innerHTML =
+                "";
+
+            if (
+                !data.conversations ||
+                data.conversations.length === 0
+            ) {
+
+                const empty =
+                    document.createElement("div");
+
+                empty.style.color =
+                    "#617a97";
+
+                empty.style.fontSize =
+                    "12px";
+
+                empty.style.padding =
+                    "10px";
+
+                empty.textContent =
+                    "No previous sessions yet.";
+
+                historyContainer.appendChild(
+                    empty
+                );
+
+                return;
+            }
+
+            data.conversations.forEach(
+                conversation => {
+
+                    const button =
+                        document.createElement(
+                            "button"
+                        );
+
+                    button.className =
+                        "history-item";
+
+                    button.textContent =
+                        conversation.title ||
+                        "IT Support Session";
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+                            loadConversation(
+                                conversation.id
+                            );
+                        }
+                    );
+
+                    historyContainer.appendChild(
+                        button
+                    );
+                }
+            );
+
+        } catch (error) {
+
+            console.error(
+                "History error:",
+                error
+            );
+        }
+    }
+
+
+    /* =========================
+       LOAD CONVERSATION
+    ========================= */
+
+    async function loadConversation(id) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `/history/${id}`
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+                return;
+            }
+
+            currentConversationId =
+                id;
+
+            chat.innerHTML =
+                "";
+
+            data.messages.forEach(
+                message => {
+
+                    addMessage(
+                        message.role,
+                        message.content
+                    );
+                }
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Conversation error:",
+                error
+            );
+        }
+    }
+
+
+    /* =========================
+       NEW SESSION
+    ========================= */
+
+    function createNewSession() {
+
+        currentConversationId =
+            null;
+
+        showWelcome();
+
+        messageInput.value =
+            "";
+
+        messageInput.style.height =
+            "auto";
+
+        messageInput.focus();
+    }
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================= */
+
+    async function sendMessage() {
+
+        const message =
+            messageInput.value.trim();
+
+        if (
+            !message ||
+            isSending
+        ) {
+            return;
+        }
+
+        isSending =
+            true;
+
+        sendButton.disabled =
+            true;
+
+        addMessage(
+            "user",
+            message
+        );
+
+        messageInput.value =
+            "";
+
+        messageInput.style.height =
+            "auto";
+
+        const typing =
+            document.createElement(
+                "div"
+            );
+
+        typing.className =
+            "typing";
+
+        typing.textContent =
+            "FixFlow-AI is thinking...";
+
+        chat.appendChild(
+            typing
+        );
+
+        try {
+
+            const response =
+                await fetch(
+                    "/chat",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            message:
+                                message,
+
+                            conversation_id:
+                                currentConversationId
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            typing.remove();
+
+            if (!response.ok) {
+
+                addMessage(
+                    "assistant",
+                    data.error ||
+                    "Something went wrong. Please try again."
+                );
+
+                return;
+            }
+
+            currentConversationId =
+                data.conversation_id;
+
+            addMessage("assistant", data.answer);
+
+            await loadHistory();
+
+        } catch (error) {
+
+            typing.remove();
+
+            addMessage(
+                "assistant",
+                "I couldn't connect to the FixFlow-AI server. Please make sure the Flask app is running."
+            );
+
+            console.error(
+                error
+            );
+
+        } finally {
+
+            isSending =
+                false;
+
+            sendButton.disabled =
+                false;
+
+            messageInput.focus();
+        }
+    }
+
+
+    /* =========================
+       CATEGORY BUTTONS
+       NOW SEND AUTOMATICALLY
+    ========================= */
+
+    document
+        .querySelectorAll(
+            ".category[data-prompt], .problem[data-prompt]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    const prompt =
+                        button.dataset.prompt;
+
+                    setInput(prompt);
+
+                    await sendMessage();
+                }
+            );
+        });
+
+
+    /* =========================
+       PROVIDER
+    ========================= */
+
+    async function loadProvider() {
+
+        try {
+
+            const response =
+                await fetch("/provider");
+
+            const data =
+                await response.json();
+
+            if (data.provider) {
+
+                providerSelect.value =
+                    data.provider;
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Provider error:",
+                error
+            );
+        }
+    }
+
+
+    providerSelect.addEventListener(
+        "change",
+        async () => {
+
+            try {
+
+                await fetch(
+                    "/provider",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            provider:
+                                providerSelect.value
+                        })
+                    }
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Provider update error:",
+                    error
+                );
+            }
+        }
+    );
+
+
+    /* =========================
+       SEND BUTTON
+    ========================= */
+
+    sendButton.addEventListener(
+        "click",
+        sendMessage
+    );
+
+
+    /* =========================
+       ENTER TO SEND
+    ========================= */
+
+    messageInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+            }
+        }
+    );
+
+
+    /* =========================
+       AUTO RESIZE
+    ========================= */
+
+    messageInput.addEventListener(
+        "input",
+        () => {
+
+            messageInput.style.height =
+                "auto";
+
+            messageInput.style.height =
+                Math.min(
+                    messageInput.scrollHeight,
+                    130
+                ) + "px";
+        }
+    );
+
+
+    /* =========================
+       NEW SESSION
+    ========================= */
+
+    document
+        .getElementById(
+            "newSessionButton"
+        )
+        .addEventListener(
+            "click",
+            createNewSession
+        );
+
+
+    /* =========================
+       ACCOUNT
+    ========================= */
+
+    document
+        .getElementById(
+            "accountButton"
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "/account";
+            }
+        );
+
+
+    /* =========================
+       LOGOUT
+    ========================= */
+
+    document
+        .getElementById(
+            "logoutButton"
+        )
+        .addEventListener(
+            "click",
+            async () => {
+
+                await fetch(
+                    "/logout",
+                    {
+                        method: "POST"
+                    }
+                );
+
+                window.location.href =
+                    "/login";
+            }
+        );
+
+
+    /* =========================
+       START APP
+    ========================= */
+
+    showWelcome();
+
+    loadHistory();
+
+    loadProvider();
+
+</script>
+
+</body>
+</html>
