@@ -351,7 +351,19 @@ def get_ai_response(
         "Unknown AI provider"
     )
 
+# --------------------------------------------------
+# Sitemap
+# --------------------------------------------------
 
+@app.route("/sitemap.xml")
+def sitemap():
+    return """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://fixflowitsupport.com/</loc>
+    </url>
+</urlset>
+"""
 # --------------------------------------------------
 # Home
 # --------------------------------------------------
