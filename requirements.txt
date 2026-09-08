@@ -1,6 +1,6 @@
 openai
 python-dotenv
 flask
-Grog
-Flask-WTF
+groq
 gunicorn
+psycopg[binary]
