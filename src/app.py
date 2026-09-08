@@ -16,6 +16,7 @@ from .database import (
     get_messages,
     get_conversations,
     conversation_belongs_to_user,
+    get_connection,
 )
 
 
@@ -97,6 +98,71 @@ app.config.update(
 
 
 # --------------------------------------------------
+# Database helpers
+# --------------------------------------------------
+
+def row_value(row, column_name, position):
+    """
+    Read a database row whether it comes from
+    SQLite or PostgreSQL.
+    """
+
+    if isinstance(row, sqlite3.Row):
+        return row[column_name]
+
+    return row[position]
+
+
+def update_conversation_title(
+    conversation_id,
+    user_id,
+    title
+):
+    """
+    Update a conversation title using either
+    PostgreSQL or local SQLite.
+    """
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    if os.getenv("DATABASE_URL"):
+
+        cursor.execute(
+            """
+            UPDATE conversations
+            SET title = %s
+            WHERE id = %s
+            AND user_id = %s
+            """,
+            (
+                title,
+                conversation_id,
+                user_id
+            )
+        )
+
+    else:
+
+        cursor.execute(
+            """
+            UPDATE conversations
+            SET title = ?
+            WHERE id = ?
+            AND user_id = ?
+            """,
+            (
+                title,
+                conversation_id,
+                user_id
+            )
+        )
+
+    connection.commit()
+    connection.close()
+
+
+# --------------------------------------------------
 # Security
 # --------------------------------------------------
 
@@ -109,6 +175,7 @@ def request_is_same_origin():
     origin = request.headers.get("Origin")
 
     if origin:
+
         parsed_origin = urlparse(origin)
 
         request_origin = (
@@ -125,6 +192,7 @@ def request_is_same_origin():
     referer = request.headers.get("Referer")
 
     if referer:
+
         parsed_referer = urlparse(referer)
 
         referer_origin = (
@@ -164,7 +232,7 @@ def protect_state_changing_requests():
 
 
 # --------------------------------------------------
-# Database
+# Database initialization
 # --------------------------------------------------
 
 initialize_database()
@@ -256,7 +324,10 @@ feels like working with a real IT support technician one step at a time.
 # AI response
 # --------------------------------------------------
 
-def get_ai_response(messages, provider_name):
+def get_ai_response(
+    messages,
+    provider_name
+):
 
     if provider_name == "groq":
 
@@ -419,8 +490,17 @@ def login():
                 "Invalid username or password."
         }), 401
 
-    session["user_id"] = user["id"]
-    session["username"] = user["username"]
+    session["user_id"] = row_value(
+        user,
+        "id",
+        0
+    )
+
+    session["username"] = row_value(
+        user,
+        "username",
+        1
+    )
 
     session.pop(
         "conversation_id",
@@ -581,9 +661,17 @@ def chat():
 
         conversation.append({
             "role":
-                message["role"],
+                row_value(
+                    message,
+                    "role",
+                    0
+                ),
             "content":
-                message["content"]
+                row_value(
+                    message,
+                    "content",
+                    1
+                )
         })
 
     if len(previous_messages) == 0:
@@ -597,31 +685,11 @@ def chat():
                 + "..."
             )
 
-        connection = sqlite3.connect(
-            os.path.join(
-                BASE_DIR,
-                "fixflow.db"
-            )
+        update_conversation_title(
+            conversation_id,
+            user_id,
+            title
         )
-
-        cursor = connection.cursor()
-
-        cursor.execute(
-            """
-            UPDATE conversations
-            SET title = ?
-            WHERE id = ?
-            AND user_id = ?
-            """,
-            (
-                title,
-                conversation_id,
-                user_id
-            )
-        )
-
-        connection.commit()
-        connection.close()
 
     conversation.append({
         "role": "user",
@@ -743,11 +811,23 @@ def history():
 
         history_list.append({
             "id":
-                item["id"],
+                row_value(
+                    item,
+                    "id",
+                    0
+                ),
             "title":
-                item["title"],
+                row_value(
+                    item,
+                    "title",
+                    1
+                ),
             "created_at":
-                item["created_at"]
+                row_value(
+                    item,
+                    "created_at",
+                    2
+                )
         })
 
     return jsonify({
@@ -797,11 +877,23 @@ def history_messages(
 
         message_list.append({
             "role":
-                message["role"],
+                row_value(
+                    message,
+                    "role",
+                    0
+                ),
             "content":
-                message["content"],
+                row_value(
+                    message,
+                    "content",
+                    1
+                ),
             "created_at":
-                message["created_at"]
+                row_value(
+                    message,
+                    "created_at",
+                    2
+                )
         })
 
     session["conversation_id"] = (
