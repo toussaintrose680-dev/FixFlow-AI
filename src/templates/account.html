@@ -683,31 +683,9 @@
 
     document
         .getElementById("logoutButton")
-        .addEventListener("click", async function () {
+        .addEventListener("click", function () {
 
-            try {
-
-                const response = await fetch("/logout", {
-                    method: "POST"
-                });
-
-                if (response.ok) {
-
-                    window.location.href = "/login";
-
-                } else {
-
-                    alert("Unable to log out. Please try again.");
-
-                }
-
-            } catch (error) {
-
-                console.error("Logout error:", error);
-
-                alert("Unable to log out. Please try again.");
-
-            }
+            window.location.href = "/logout";
 
         });
 
@@ -715,6 +693,5 @@
     loadAccount();
 
 </script>
-
 </body>
 </html>

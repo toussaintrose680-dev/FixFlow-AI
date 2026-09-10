@@ -3,7 +3,8 @@ import sqlite3
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, jsonify, render_template, request, session, redirect, url_for
+
 from groq import Groq
 from openai import OpenAI
 
@@ -367,24 +368,12 @@ def sitemap():
 # --------------------------------------------------
 # Home
 # --------------------------------------------------
-@app.route("/about")
-def about():
-    return render_template("about.html")
 @app.route("/")
 def home():
-
-    if "user_id" not in session:
-
-        return render_template(
-            "login.html"
-        )
-
     return render_template(
         "index.html",
         username=session.get("username")
     )
-
-
 # --------------------------------------------------
 # Sign up
 # --------------------------------------------------
@@ -529,22 +518,12 @@ def login():
     })
 
 
-# --------------------------------------------------
-# Logout
-# --------------------------------------------------
-
-@app.route(
-    "/logout",
-    methods=["POST"]
-)
+@app.route("/logout")
 def logout():
 
     session.clear()
 
-    return jsonify({
-        "message":
-            "Logged out successfully."
-    })
+    return redirect(url_for("home"))
 
 
 # --------------------------------------------------
