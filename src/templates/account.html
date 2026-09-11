@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Account | FixFlow-AI</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Account | OneTapSolve AI</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,12 +21,26 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             min-height: 100vh;
+
             background:
-                radial-gradient(circle at top left, rgba(0, 212, 255, 0.12), transparent 35%),
-                radial-gradient(circle at bottom right, rgba(0, 140, 255, 0.10), transparent 35%),
+                radial-gradient(
+                    circle at top left,
+                    rgba(0, 212, 255, 0.12),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(0, 140, 255, 0.10),
+                    transparent 35%
+                ),
                 #07111f;
+
             color: #ffffff;
         }
 
@@ -27,39 +48,64 @@
             min-height: 100vh;
         }
 
-        /* NAVIGATION */
+        /* =========================
+           NAVIGATION
+        ========================= */
 
         .navbar {
             height: 76px;
+
             width: 100%;
+
             display: flex;
+
             align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(5, 13, 25, 0.88);
-            backdrop-filter: blur(12px);
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 40px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            background:
+                rgba(5, 13, 25, 0.88);
+
+            backdrop-filter:
+                blur(12px);
         }
 
         .brand {
             display: flex;
+
             align-items: center;
+
             gap: 12px;
+
             text-decoration: none;
+
             color: white;
         }
 
         .brand img {
-            width: 48px;
-            height: 48px;
+            width: 58px;
+            height: 58px;
+
             object-fit: contain;
-            border-radius: 12px;
+
+            border-radius: 14px;
         }
 
         .brand-text {
-            font-size: 21px;
+            font-size: 20px;
+
             font-weight: 800;
-            letter-spacing: -0.5px;
+
+            letter-spacing:
+                -0.5px;
         }
 
         .brand-text span {
@@ -68,296 +114,521 @@
 
         .back-button {
             text-decoration: none;
+
             color: #d9e7f5;
-            border: 1px solid rgba(255, 255, 255, 0.13);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 10px 18px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.13);
+
+            background:
+                rgba(255, 255, 255, 0.04);
+
+            padding:
+                10px 18px;
+
             border-radius: 10px;
+
             font-size: 14px;
+
             font-weight: 600;
-            transition: 0.2s ease;
+
+            transition:
+                0.2s ease;
         }
 
         .back-button:hover {
-            background: rgba(0, 217, 255, 0.10);
-            border-color: rgba(0, 217, 255, 0.35);
+            background:
+                rgba(0, 217, 255, 0.10);
+
+            border-color:
+                rgba(0, 217, 255, 0.35);
+
             color: #ffffff;
         }
 
-        /* MAIN */
+        /* =========================
+           MAIN
+        ========================= */
 
         .container {
-            width: min(1100px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 60px 0 80px;
+            width:
+                min(
+                    1100px,
+                    calc(100% - 40px)
+                );
+
+            margin:
+                0 auto;
+
+            padding:
+                60px 0 80px;
         }
 
         .hero {
             text-align: center;
+
             margin-bottom: 42px;
         }
 
         .hero-logo {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
+
             object-fit: contain;
+
             margin-bottom: 18px;
-            filter: drop-shadow(0 12px 30px rgba(0, 217, 255, 0.18));
+
+            filter:
+                drop-shadow(
+                    0 12px 30px
+                    rgba(0, 217, 255, 0.18)
+                );
         }
 
         .hero h1 {
-            font-size: clamp(32px, 5vw, 48px);
+            font-size:
+                clamp(
+                    32px,
+                    5vw,
+                    48px
+                );
+
             line-height: 1.1;
+
             margin-bottom: 12px;
-            letter-spacing: -1.5px;
+
+            letter-spacing:
+                -1.5px;
         }
 
         .hero h1 span {
-            color: #00d9ff;
+            background:
+                linear-gradient(
+                    90deg,
+                    #16c9ff,
+                    #7d6bff,
+                    #e45cff
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
         }
 
         .hero p {
             color: #9eb2c8;
+
             font-size: 16px;
+
             line-height: 1.6;
         }
 
-        /* GRID */
+        /* =========================
+           GRID
+        ========================= */
 
         .account-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+
+            grid-template-columns:
+                1fr 1fr;
+
             gap: 22px;
         }
 
         .card {
-            background: rgba(12, 28, 46, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                rgba(12, 28, 46, 0.82);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
             border-radius: 20px;
+
             padding: 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.20);
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.20);
         }
 
         .card h2 {
             font-size: 19px;
+
             margin-bottom: 8px;
         }
 
         .card-subtitle {
             color: #8499af;
+
             font-size: 14px;
+
             margin-bottom: 24px;
         }
 
-        /* PROFILE */
+        /* =========================
+           PROFILE
+        ========================= */
 
         .profile-box {
             display: flex;
+
             align-items: center;
+
             gap: 18px;
+
             padding: 18px;
+
             border-radius: 15px;
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.06);
         }
 
         .profile-avatar {
             width: 58px;
             height: 58px;
+
             border-radius: 50%;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
-            background: linear-gradient(135deg, #00d9ff, #087cff);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d9ff,
+                    #087cff
+                );
+
             color: #03101c;
+
             font-size: 23px;
+
             font-weight: 800;
+
             flex-shrink: 0;
         }
 
         .profile-label {
             color: #8298ae;
+
             font-size: 12px;
-            text-transform: uppercase;
+
+            text-transform:
+                uppercase;
+
             letter-spacing: 1px;
+
             margin-bottom: 5px;
         }
 
         .username {
             font-size: 18px;
+
             font-weight: 700;
-            word-break: break-word;
+
+            word-break:
+                break-word;
         }
 
-        /* FEATURES */
+        /* =========================
+           FEATURES
+        ========================= */
 
         .feature-list {
             display: grid;
+
             gap: 12px;
         }
 
         .feature {
             display: flex;
+
             align-items: center;
+
             gap: 14px;
+
             padding: 15px;
+
             border-radius: 13px;
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
         }
 
         .feature-icon {
             width: 38px;
             height: 38px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             border-radius: 10px;
-            background: rgba(0, 217, 255, 0.10);
+
+            background:
+                rgba(0, 217, 255, 0.10);
+
             color: #00d9ff;
+
             font-size: 18px;
+
             flex-shrink: 0;
         }
 
         .feature strong {
             display: block;
+
             font-size: 14px;
+
             margin-bottom: 3px;
         }
 
         .feature span {
             color: #8499af;
+
             font-size: 12px;
         }
 
-        /* STATUS */
+        /* =========================
+           STATUS
+        ========================= */
 
         .status-card {
             margin-top: 22px;
+
             display: flex;
+
             align-items: center;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             gap: 20px;
         }
 
         .status-left {
             display: flex;
+
             align-items: center;
+
             gap: 14px;
         }
 
         .status-dot {
             width: 12px;
             height: 12px;
+
             border-radius: 50%;
+
             background: #26e07f;
-            box-shadow: 0 0 14px rgba(38, 224, 127, 0.65);
+
+            box-shadow:
+                0 0 14px
+                rgba(38, 224, 127, 0.65);
         }
 
         .status-title {
             font-size: 14px;
+
             font-weight: 700;
         }
 
         .status-description {
             color: #8298ae;
+
             font-size: 12px;
+
             margin-top: 3px;
         }
 
         .status-badge {
-            padding: 7px 12px;
+            padding:
+                7px 12px;
+
             border-radius: 999px;
-            background: rgba(38, 224, 127, 0.10);
-            border: 1px solid rgba(38, 224, 127, 0.22);
+
+            background:
+                rgba(38, 224, 127, 0.10);
+
+            border:
+                1px solid
+                rgba(38, 224, 127, 0.22);
+
             color: #65efa4;
+
             font-size: 12px;
+
             font-weight: 700;
         }
 
-        /* ACTIONS */
+        /* =========================
+           ACTIONS
+        ========================= */
 
         .actions {
             display: flex;
+
             gap: 12px;
+
             margin-top: 22px;
         }
 
         .button {
             flex: 1;
+
             min-height: 48px;
+
             border-radius: 12px;
+
             border: none;
+
             cursor: pointer;
+
             text-decoration: none;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 14px;
+
             font-weight: 700;
-            transition: 0.2s ease;
+
+            transition:
+                0.2s ease;
         }
 
         .primary-button {
             color: #03101c;
-            background: linear-gradient(135deg, #00e0ff, #00a8ff);
-            box-shadow: 0 10px 30px rgba(0, 190, 255, 0.18);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00e0ff,
+                    #00a8ff
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 190, 255, 0.18);
         }
 
         .primary-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(0, 190, 255, 0.28);
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 14px 35px
+                rgba(0, 190, 255, 0.28);
         }
 
         .logout-button {
             color: #e5edf6;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.10);
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
         }
 
         .logout-button:hover {
-            background: rgba(255, 80, 80, 0.09);
-            border-color: rgba(255, 100, 100, 0.25);
+            background:
+                rgba(255, 80, 80, 0.09);
+
+            border-color:
+                rgba(255, 100, 100, 0.25);
         }
 
-        /* FOOTER */
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
             text-align: center;
+
             color: #61758a;
+
             font-size: 12px;
-            padding: 25px 20px 35px;
+
+            padding:
+                25px 20px 35px;
         }
 
-        /* LOADING */
+        /* =========================
+           LOADING
+        ========================= */
 
         .loading {
             text-align: center;
-            padding: 100px 20px;
+
+            padding:
+                100px 20px;
+
             color: #8fa4ba;
         }
 
         .spinner {
             width: 38px;
             height: 38px;
-            margin: 0 auto 18px;
-            border: 3px solid rgba(255, 255, 255, 0.10);
-            border-top-color: #00d9ff;
+
+            margin:
+                0 auto 18px;
+
+            border:
+                3px solid
+                rgba(255, 255, 255, 0.10);
+
+            border-top-color:
+                #00d9ff;
+
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+
+            animation:
+                spin 0.8s linear infinite;
         }
 
         @keyframes spin {
+
             to {
-                transform: rotate(360deg);
+                transform:
+                    rotate(360deg);
             }
+
         }
 
-        /* MOBILE */
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 760px) {
+
             .navbar {
-                padding: 0 18px;
+                padding:
+                    0 18px;
+
                 height: 68px;
             }
 
@@ -366,18 +637,26 @@
             }
 
             .brand img {
-                width: 42px;
-                height: 42px;
+                width: 48px;
+                height: 48px;
             }
 
             .back-button {
-                padding: 8px 12px;
+                padding:
+                    8px 12px;
+
                 font-size: 12px;
             }
 
             .container {
-                width: min(100% - 24px, 600px);
-                padding: 40px 0 55px;
+                width:
+                    min(
+                        calc(100% - 24px),
+                        600px
+                    );
+
+                padding:
+                    40px 0 55px;
             }
 
             .hero {
@@ -385,12 +664,13 @@
             }
 
             .hero-logo {
-                width: 90px;
-                height: 90px;
+                width: 100px;
+                height: 100px;
             }
 
             .account-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
             .card {
@@ -398,16 +678,22 @@
             }
 
             .status-card {
-                align-items: flex-start;
-                flex-direction: column;
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
             }
 
             .actions {
-                flex-direction: column;
+                flex-direction:
+                    column;
             }
+
         }
 
         @media (max-width: 420px) {
+
             .brand-text {
                 display: none;
             }
@@ -419,26 +705,47 @@
             .hero p {
                 font-size: 14px;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
 <div class="page">
 
+
     <!-- NAVIGATION -->
+
     <nav class="navbar">
 
-        <a href="/" class="brand">
-            <img src="/static/fixflow-logo.png" alt="FixFlow-AI Logo">
+        <a
+            href="/"
+            class="brand"
+        >
+
+            <img
+                src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+                alt="OneTapSolve AI Logo"
+            >
 
             <div class="brand-text">
-                FixFlow<span>-AI</span>
+
+                OneTapSolve
+                <span>AI</span>
+
             </div>
+
         </a>
 
-        <a href="/" class="back-button">
+
+        <a
+            href="/"
+            class="back-button"
+        >
             ← Back to Support
         </a>
 
@@ -446,54 +753,83 @@
 
 
     <!-- MAIN CONTENT -->
+
     <main class="container">
+
 
         <section class="hero">
 
             <img
-                src="/static/fixflow-logo.png"
-                alt="FixFlow-AI"
+                src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+                alt="OneTapSolve AI"
                 class="hero-logo"
             >
 
+
             <h1>
-                Your <span>FixFlow-AI</span> Account
+
+                Your
+                <span>
+                    OneTapSolve AI
+                </span>
+                Account
+
             </h1>
 
+
             <p>
-                Manage your account and access your AI-powered IT support.
+                Manage your account and access
+                your AI-powered IT support.
             </p>
 
         </section>
 
 
-        <div id="loading" class="loading">
+        <div
+            id="loading"
+            class="loading"
+        >
 
             <div class="spinner"></div>
 
-            <p>Loading your account...</p>
+            <p>
+                Loading your account...
+            </p>
 
         </div>
 
 
-        <div id="accountContent" style="display: none;">
+        <div
+            id="accountContent"
+            style="display: none;"
+        >
+
 
             <div class="account-grid">
 
+
                 <!-- PROFILE CARD -->
+
                 <section class="card">
 
-                    <h2>Profile</h2>
+                    <h2>
+                        Profile
+                    </h2>
 
                     <p class="card-subtitle">
-                        Your FixFlow-AI account information.
+                        Your OneTapSolve AI account information.
                     </p>
+
 
                     <div class="profile-box">
 
-                        <div id="avatar" class="profile-avatar">
+                        <div
+                            id="avatar"
+                            class="profile-avatar"
+                        >
                             ?
                         </div>
+
 
                         <div>
 
@@ -501,7 +837,11 @@
                                 Username
                             </div>
 
-                            <div id="username" class="username">
+
+                            <div
+                                id="username"
+                                class="username"
+                            >
                                 Loading...
                             </div>
 
@@ -513,15 +853,20 @@
 
 
                 <!-- FEATURES CARD -->
+
                 <section class="card">
 
-                    <h2>Your Services</h2>
+                    <h2>
+                        Your Services
+                    </h2>
 
                     <p class="card-subtitle">
-                        What your FixFlow-AI account gives you access to.
+                        What your OneTapSolve AI account gives you access to.
                     </p>
 
+
                     <div class="feature-list">
+
 
                         <div class="feature">
 
@@ -530,8 +875,15 @@
                             </div>
 
                             <div>
-                                <strong>AI IT Support</strong>
-                                <span>Get help troubleshooting technology problems.</span>
+
+                                <strong>
+                                    AI IT Support
+                                </strong>
+
+                                <span>
+                                    Get help troubleshooting technology problems.
+                                </span>
+
                             </div>
 
                         </div>
@@ -544,8 +896,15 @@
                             </div>
 
                             <div>
-                                <strong>Support Sessions</strong>
-                                <span>Keep track of your previous support conversations.</span>
+
+                                <strong>
+                                    Support Sessions
+                                </strong>
+
+                                <span>
+                                    Keep track of your previous support conversations.
+                                </span>
+
                             </div>
 
                         </div>
@@ -558,8 +917,15 @@
                             </div>
 
                             <div>
-                                <strong>Private Account</strong>
-                                <span>Your support sessions are protected by your account.</span>
+
+                                <strong>
+                                    Private Account
+                                </strong>
+
+                                <span>
+                                    Your support sessions are protected by your account.
+                                </span>
+
                             </div>
 
                         </div>
@@ -572,30 +938,43 @@
                             </div>
 
                             <div>
-                                <strong>AI Provider Choice</strong>
-                                <span>Choose between the available AI support providers.</span>
+
+                                <strong>
+                                    AI Provider Choice
+                                </strong>
+
+                                <span>
+                                    Choose between the available AI support providers.
+                                </span>
+
                             </div>
 
                         </div>
+
 
                     </div>
 
                 </section>
 
+
             </div>
 
 
             <!-- STATUS -->
-            <section class="card status-card">
+
+            <section
+                class="card status-card"
+            >
 
                 <div class="status-left">
 
                     <div class="status-dot"></div>
 
+
                     <div>
 
                         <div class="status-title">
-                            FixFlow-AI Service
+                            OneTapSolve AI Service
                         </div>
 
                         <div class="status-description">
@@ -606,6 +985,7 @@
 
                 </div>
 
+
                 <div class="status-badge">
                     AVAILABLE
                 </div>
@@ -614,11 +994,16 @@
 
 
             <!-- ACTIONS -->
+
             <div class="actions">
 
-                <a href="/" class="button primary-button">
+                <a
+                    href="/"
+                    class="button primary-button"
+                >
                     Start IT Support
                 </a>
+
 
                 <button
                     type="button"
@@ -630,14 +1015,19 @@
 
             </div>
 
+
         </div>
 
     </main>
 
 
     <footer>
-        FixFlow-AI © 2026 · Smart IT Support. Smoother Days.
+
+        OneTapSolve AI © 2026 ·
+        Smart IT Support.
+
     </footer>
+
 
 </div>
 
@@ -648,33 +1038,67 @@
 
         try {
 
-            const response = await fetch("/me");
+            const response =
+                await fetch("/me");
 
-            const data = await response.json();
 
-            if (!response.ok || !data.logged_in) {
+            const data =
+                await response.json();
 
-                window.location.href = "/login";
+
+            if (
+                !response.ok ||
+                !data.logged_in
+            ) {
+
+                window.location.href =
+                    "/login";
 
                 return;
+
             }
 
-            const username = data.username || "User";
 
-            document.getElementById("username").textContent = username;
+            const username =
+                data.username || "User";
 
-            document.getElementById("avatar").textContent =
-                username.charAt(0).toUpperCase();
 
-            document.getElementById("loading").style.display = "none";
+            document
+                .getElementById("username")
+                .textContent =
+                    username;
 
-            document.getElementById("accountContent").style.display = "block";
+
+            document
+                .getElementById("avatar")
+                .textContent =
+                    username
+                        .charAt(0)
+                        .toUpperCase();
+
+
+            document
+                .getElementById("loading")
+                .style.display =
+                    "none";
+
+
+            document
+                .getElementById("accountContent")
+                .style.display =
+                    "block";
+
 
         } catch (error) {
 
-            console.error("Account loading error:", error);
+            console.error(
+                "Account loading error:",
+                error
+            );
 
-            window.location.href = "/login";
+
+            window.location.href =
+                "/login";
 
         }
 
@@ -683,15 +1107,22 @@
 
     document
         .getElementById("logoutButton")
-        .addEventListener("click", function () {
+        .addEventListener(
+            "click",
+            function () {
 
-            window.location.href = "/logout";
+                window.location.href =
+                    "/logout";
 
-        });
+            }
+        );
 
 
     loadAccount();
 
 </script>
+
+
 </body>
+
 </html>

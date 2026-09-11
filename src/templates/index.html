@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FixFlow-AI | Smart IT Support</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>OneTapSolve AI | Smart IT Support</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            font-family: Inter, Arial, sans-serif;
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
             background:
-                radial-gradient(circle at top left, #17345c 0%, transparent 35%),
-                radial-gradient(circle at bottom right, #10294a 0%, transparent 30%),
+                radial-gradient(
+                    circle at top left,
+                    #17345c 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #10294a 0%,
+                    transparent 30%
+                ),
                 #07111f;
+
             color: #f5f9ff;
             min-height: 100vh;
         }
 
         button,
-        input,
         textarea,
         select {
             font: inherit;
@@ -32,416 +57,795 @@
             cursor: pointer;
         }
 
+        /* =========================
+           APP
+        ========================= */
+
         .app {
-            display: flex;
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
+        /* =========================
+           SIDEBAR
+        ========================= */
 
         .sidebar {
             width: 285px;
-            background: rgba(5, 14, 27, 0.94);
-            border-right: 1px solid rgba(255,255,255,0.08);
+
+            background:
+                rgba(5, 14, 27, 0.96);
+
+            border-right:
+                1px solid rgba(255,255,255,0.08);
+
             display: flex;
             flex-direction: column;
-            padding: 22px 16px;
+
+            padding:
+                22px 16px;
+
             position: fixed;
+
             left: 0;
             top: 0;
             bottom: 0;
+
             z-index: 20;
         }
 
         .brand {
             display: flex;
             align-items: center;
+
             gap: 12px;
-            padding: 4px 8px 22px;
+
+            padding:
+                4px 8px 22px;
         }
 
         .brand img {
-            width: 52px;
-            height: 52px;
+            width: 68px;
+            height: 68px;
+
             object-fit: contain;
-            border-radius: 14px;
+
+            border-radius: 16px;
+
+            flex-shrink: 0;
+        }
+
+        .brand-text {
+            min-width: 0;
         }
 
         .brand-text strong {
             display: block;
-            font-size: 20px;
-            letter-spacing: -0.5px;
+
+            font-size: 18px;
+
+            letter-spacing: -0.4px;
+
+            white-space: nowrap;
         }
 
         .brand-text span {
+            display: block;
+
+            margin-top: 3px;
+
             color: #8ea8c7;
-            font-size: 12px;
+
+            font-size: 11px;
         }
+
+        /* =========================
+           NEW SESSION
+        ========================= */
 
         .new-session {
             width: 100%;
+
             border: 0;
+
             border-radius: 13px;
+
             padding: 13px 15px;
-            background: linear-gradient(135deg, #16c9ff, #1677ff);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #16c9ff,
+                    #1677ff
+                );
+
             color: white;
+
             font-weight: 700;
-            box-shadow: 0 8px 25px rgba(22,119,255,0.25);
+
+            box-shadow:
+                0 8px 25px
+                rgba(22,119,255,0.25);
+
             margin-bottom: 20px;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
         }
 
         .new-session:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 30px rgba(22,119,255,0.35);
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(22,119,255,0.35);
         }
+
+        /* =========================
+           HISTORY
+        ========================= */
 
         .sidebar-title {
             color: #6f87a5;
+
             text-transform: uppercase;
+
             letter-spacing: 1px;
+
             font-size: 10px;
+
             font-weight: 700;
-            padding: 0 9px 9px;
+
+            padding:
+                0 9px 9px;
         }
 
         .history {
             flex: 1;
+
             overflow-y: auto;
+
+            padding-right: 2px;
         }
 
         .history-item {
             width: 100%;
+
             text-align: left;
+
             border: 0;
+
             background: transparent;
+
             color: #c5d3e4;
-            padding: 11px 10px;
+
+            padding:
+                11px 10px;
+
             border-radius: 10px;
+
             margin-bottom: 3px;
+
             overflow: hidden;
+
             text-overflow: ellipsis;
+
             white-space: nowrap;
+
+            transition:
+                background 0.2s,
+                color 0.2s;
         }
 
         .history-item:hover {
-            background: rgba(255,255,255,0.06);
+            background:
+                rgba(255,255,255,0.06);
+
             color: white;
         }
 
+        .empty-history {
+            color: #617a97;
+
+            font-size: 12px;
+
+            padding: 10px;
+        }
+
+        /* =========================
+           SIDEBAR BOTTOM
+        ========================= */
+
         .sidebar-bottom {
-            border-top: 1px solid rgba(255,255,255,0.08);
+            border-top:
+                1px solid
+                rgba(255,255,255,0.08);
+
             padding-top: 15px;
         }
 
         .account-button,
         .logout-button {
             width: 100%;
+
             border: 0;
+
             background: transparent;
+
             color: #afc0d4;
+
             text-align: left;
+
             padding: 10px;
+
             border-radius: 9px;
+
             margin-top: 3px;
+
+            transition:
+                background 0.2s,
+                color 0.2s;
         }
 
         .account-button:hover,
         .logout-button:hover {
-            background: rgba(255,255,255,0.06);
+            background:
+                rgba(255,255,255,0.06);
+
             color: white;
         }
 
-        /* MAIN */
+        /* =========================
+           MAIN
+        ========================= */
 
         .main {
             margin-left: 285px;
-            width: calc(100% - 285px);
+
+            width:
+                calc(100% - 285px);
+
             min-height: 100vh;
+
             display: flex;
+
             flex-direction: column;
         }
 
+        /* =========================
+           TOP BAR
+        ========================= */
+
         .topbar {
             min-height: 72px;
-            padding: 15px 28px;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
+
+            padding:
+                15px 28px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+
             display: flex;
+
             align-items: center;
-            justify-content: space-between;
-            backdrop-filter: blur(15px);
-            background: rgba(7,17,31,0.55);
+
+            justify-content:
+                space-between;
+
+            backdrop-filter:
+                blur(15px);
+
+            background:
+                rgba(7,17,31,0.58);
+
             position: sticky;
+
             top: 0;
+
             z-index: 10;
         }
 
         .topbar-title {
             font-weight: 700;
+
             font-size: 16px;
+
+            color: #eaf4ff;
         }
 
         .provider {
             display: flex;
+
             align-items: center;
+
             gap: 9px;
-            color: #8fa7c2;
-            font-size: 13px;
         }
 
-        .provider select {
-            background: #101f33;
+        .provider label {
+            color: #7f97b4;
+
+            font-size: 11px;
+        }
+
+        #providerSelect {
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            background:
+                rgba(13,29,49,0.95);
+
             color: white;
-            border: 1px solid rgba(255,255,255,0.1);
+
             border-radius: 9px;
-            padding: 8px 11px;
+
+            padding:
+                8px 10px;
+
             outline: none;
+
+            cursor: pointer;
+
+            font-size: 12px;
         }
 
-        /* CONTENT */
+        #providerSelect:focus {
+            border-color: #16c9ff;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
 
         .content {
-            width: min(1050px, 100%);
+            width:
+                min(1050px, 100%);
+
             margin: 0 auto;
-            padding: 38px 28px 150px;
-            flex: 1;
+
+            padding:
+                42px 28px 170px;
         }
 
+        /* =========================
+           WELCOME
+        ========================= */
+
         .welcome {
+            max-width: 800px;
+
+            margin:
+                0 auto 34px;
+
             text-align: center;
-            margin-bottom: 34px;
         }
 
         .welcome-logo {
-            width: 110px;
-            height: 110px;
+            width: 150px;
+            height: 150px;
+
             object-fit: contain;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 10px 25px rgba(23,180,255,0.2));
+
+            display: block;
+
+            margin:
+                0 auto 18px;
+
+            filter:
+                drop-shadow(
+                    0 0 22px
+                    rgba(22,201,255,0.16)
+                );
         }
 
         .welcome h1 {
-            font-size: clamp(30px, 5vw, 48px);
-            margin: 4px 0 8px;
-            letter-spacing: -1.5px;
+            margin:
+                0 0 10px;
+
+            font-size:
+                clamp(32px, 5vw, 46px);
+
+            line-height: 1.08;
+
+            letter-spacing:
+                -1.4px;
         }
 
         .gradient-text {
-            background: linear-gradient(90deg, #4edbff, #72a8ff, #c28bff);
+            background:
+                linear-gradient(
+                    90deg,
+                    #16c9ff,
+                    #7d6bff,
+                    #e45cff
+                );
+
             -webkit-background-clip: text;
+
             background-clip: text;
+
             color: transparent;
         }
 
         .welcome p {
-            color: #8fa7c2;
-            margin: 0 auto;
-            max-width: 650px;
-            line-height: 1.6;
+            max-width: 590px;
+
+            margin:
+                0 auto;
+
+            color: #8ea8c7;
+
+            font-size: 14px;
+
+            line-height: 1.55;
         }
 
-        /* CATEGORIES */
+        /* =========================
+           SECTION HEADINGS
+        ========================= */
 
         .section-heading {
             display: flex;
+
             align-items: center;
-            justify-content: space-between;
-            margin: 0 0 14px;
+
+            justify-content:
+                space-between;
+
+            gap: 15px;
+
+            margin:
+                0 0 13px;
         }
 
         .section-heading h2 {
             margin: 0;
-            font-size: 18px;
+
+            font-size: 16px;
+
+            color: #edf6ff;
         }
 
         .section-heading span {
-            color: #7089a7;
-            font-size: 12px;
+            color: #5f7896;
+
+            font-size: 10px;
         }
+
+        /* =========================
+           CATEGORIES
+        ========================= */
 
         .categories {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 12px;
-            margin-bottom: 30px;
+
+            margin-bottom: 34px;
         }
 
         .category {
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(13,29,49,0.78);
+            min-height: 145px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15,37,62,0.88),
+                    rgba(8,21,37,0.78)
+                );
+
             border-radius: 15px;
+
             padding: 17px;
-            color: white;
+
+            color: #c8d8e9;
+
             text-align: left;
-            transition: 0.2s ease;
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s,
+                background 0.2s;
         }
 
         .category:hover {
-            transform: translateY(-3px);
-            border-color: rgba(63,207,255,0.45);
-            background: rgba(19,42,68,0.95);
-        }
+            transform:
+                translateY(-3px);
 
-        .category:active {
-            transform: scale(0.98);
+            border-color:
+                rgba(22,201,255,0.35);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18,49,80,0.95),
+                    rgba(8,25,44,0.9)
+                );
         }
 
         .category-icon {
-            font-size: 27px;
-            margin-bottom: 10px;
+            font-size: 26px;
+
+            margin-bottom: 13px;
         }
 
         .category strong {
             display: block;
+
             font-size: 14px;
-            margin-bottom: 5px;
+
+            color: white;
+
+            margin-bottom: 7px;
         }
 
         .category span {
             display: block;
-            color: #8098b4;
+
+            color: #7f98b5;
+
             font-size: 11px;
+
             line-height: 1.45;
         }
 
-        /* COMMON PROBLEMS */
+        /* =========================
+           COMMON PROBLEMS
+        ========================= */
 
         .problems {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 35px;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 34px;
         }
 
         .problem {
-            border: 1px solid rgba(255,255,255,0.07);
-            background: rgba(11,24,41,0.65);
-            border-radius: 13px;
-            padding: 14px;
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            background:
+                rgba(11,24,41,0.65);
+
+            border-radius: 12px;
+
+            padding: 13px;
+
             color: #c6d5e7;
+
             text-align: left;
-            transition: 0.2s;
+
+            font-size: 12px;
+
+            transition:
+                background 0.2s,
+                border-color 0.2s,
+                transform 0.2s;
         }
 
         .problem:hover {
-            background: rgba(255,255,255,0.06);
+            background:
+                rgba(255,255,255,0.06);
+
             color: white;
-            border-color: rgba(255,255,255,0.15);
+
+            border-color:
+                rgba(255,255,255,0.15);
+
+            transform:
+                translateY(-1px);
         }
 
         .problem:active {
-            transform: scale(0.98);
+            transform:
+                scale(0.98);
         }
 
         .problem-icon {
             margin-right: 7px;
         }
 
-        /* CHAT */
+        /* =========================
+           CHAT
+        ========================= */
 
         #chat {
             display: flex;
+
             flex-direction: column;
+
             gap: 18px;
         }
 
         .message {
             display: flex;
+
             gap: 12px;
-            align-items: flex-start;
+
+            align-items:
+                flex-start;
         }
 
         .message.user {
-            justify-content: flex-end;
+            justify-content:
+                flex-end;
         }
 
         .avatar {
             width: 38px;
             height: 38px;
-            flex: 0 0 38px;
+
+            flex:
+                0 0 38px;
+
             border-radius: 12px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
-            background: #132a45;
+
+            background:
+                #132a45;
+
             overflow: hidden;
         }
 
         .avatar img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
         }
 
         .bubble {
             max-width: 75%;
-            padding: 13px 16px;
+
+            padding:
+                13px 16px;
+
             border-radius: 15px;
-            background: #10233a;
+
+            background:
+                #10233a;
+
             color: #dbe8f6;
+
             line-height: 1.6;
+
             white-space: pre-wrap;
+
+            font-size: 14px;
         }
 
         .user .bubble {
-            background: linear-gradient(135deg, #126acb, #1952a5);
+            background:
+                linear-gradient(
+                    135deg,
+                    #126acb,
+                    #1952a5
+                );
+
             color: white;
         }
 
         .typing {
             color: #8ba2bc;
+
             font-size: 13px;
-            padding: 4px 50px;
-            animation: pulse 1.2s infinite;
+
+            padding:
+                4px 50px;
+
+            animation:
+                pulse 1.2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 0.45;
             }
 
             50% {
                 opacity: 1;
             }
+
         }
 
-        /* INPUT */
+        /* =========================
+           COMPOSER
+        ========================= */
 
         .composer {
             position: fixed;
+
             left: 285px;
+
             right: 0;
+
             bottom: 0;
-            padding: 15px 28px 20px;
-            background: linear-gradient(
-                to top,
-                #07111f 65%,
-                rgba(7,17,31,0)
-            );
+
+            padding:
+                15px 28px 20px;
+
+            background:
+                linear-gradient(
+                    to top,
+                    #07111f 65%,
+                    rgba(7,17,31,0)
+                );
+
+            z-index: 15;
         }
 
         .composer-inner {
-            width: min(850px, 100%);
+            width:
+                min(850px, 100%);
+
             margin: auto;
+
             display: flex;
-            align-items: flex-end;
+
+            align-items:
+                flex-end;
+
             gap: 10px;
+
             padding: 10px;
-            background: rgba(13,29,49,0.96);
-            border: 1px solid rgba(255,255,255,0.1);
+
+            background:
+                rgba(13,29,49,0.97);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
             border-radius: 17px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+
+            box-shadow:
+                0 15px 50px
+                rgba(0,0,0,0.35);
         }
 
         #messageInput {
             flex: 1;
+
             min-height: 45px;
+
             max-height: 130px;
+
             resize: none;
+
             border: 0;
+
             outline: 0;
-            background: transparent;
+
+            background:
+                transparent;
+
             color: white;
-            padding: 12px;
+
+            padding:
+                12px;
+
+            line-height: 1.45;
         }
 
         #messageInput::placeholder {
@@ -451,74 +855,129 @@
         #sendButton {
             width: 45px;
             height: 45px;
+
             border: 0;
+
             border-radius: 12px;
-            background: linear-gradient(135deg, #16c9ff, #1677ff);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #16c9ff,
+                    #1677ff
+                );
+
             color: white;
+
             font-size: 19px;
+
             font-weight: 700;
+
+            flex-shrink: 0;
+
+            transition:
+                transform 0.2s,
+                opacity 0.2s;
+        }
+
+        #sendButton:hover {
+            transform:
+                translateY(-1px);
         }
 
         #sendButton:disabled {
             opacity: 0.45;
-            cursor: not-allowed;
+
+            cursor:
+                not-allowed;
         }
 
         .composer-note {
             text-align: center;
+
             color: #566d88;
+
             font-size: 10px;
+
             margin-top: 7px;
         }
 
-        /* MOBILE */
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .categories,
+            .problems {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
 
         @media (max-width: 900px) {
+
             .sidebar {
                 width: 230px;
             }
 
             .main {
                 margin-left: 230px;
-                width: calc(100% - 230px);
+
+                width:
+                    calc(100% - 230px);
             }
 
             .composer {
                 left: 230px;
             }
 
-            .categories,
-            .problems {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 700px) {
+
             .sidebar {
                 display: none;
             }
 
             .main {
                 margin-left: 0;
+
                 width: 100%;
             }
 
             .composer {
                 left: 0;
-                padding: 10px 12px 15px;
+
+                padding:
+                    10px 12px 15px;
             }
 
             .topbar {
-                padding: 13px 15px;
+                padding:
+                    13px 15px;
             }
 
             .content {
-                padding: 25px 15px 145px;
+                padding:
+                    28px 15px 155px;
+            }
+
+            .welcome-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .welcome h1 {
+                font-size: 34px;
             }
 
             .categories,
             .problems {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns:
+                    1fr 1fr;
+
                 gap: 8px;
             }
 
@@ -526,76 +985,128 @@
                 padding: 13px;
             }
 
-            .welcome-logo {
-                width: 85px;
-                height: 85px;
-            }
-
             .bubble {
                 max-width: 88%;
             }
+
         }
 
         @media (max-width: 430px) {
+
             .categories,
             .problems {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
             .provider label {
                 display: none;
             }
+
+            .topbar-title {
+                font-size: 14px;
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <!-- SIDEBAR -->
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <aside class="sidebar">
 
         <div class="brand">
+
             <img
-                src="{{ url_for('static', filename='fixflow-logo.png') }}"
-                alt="FixFlow-AI"
+                src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+                alt="OneTapSolve AI"
             >
 
             <div class="brand-text">
-                <strong>FixFlow-AI</strong>
-                <span>Smart IT Support</span>
+
+                <strong>
+                    OneTapSolve AI
+                </strong>
+
+                <span>
+                    Smart IT Support
+                </span>
+
             </div>
+
         </div>
 
-        <button class="new-session" id="newSessionButton">
+
+        <button
+            class="new-session"
+            id="newSessionButton"
+        >
             ＋ New Support Session
         </button>
 
-        <div class="sidebar-title">Recent Sessions</div>
 
-        <div class="history" id="history"></div>
+        <div class="sidebar-title">
+            Recent Sessions
+        </div>
+
+
+        <div
+            class="history"
+            id="history"
+        >
+            <div class="empty-history">
+                Loading sessions...
+            </div>
+        </div>
+
 
         <div class="sidebar-bottom">
-            <button class="account-button" id="accountButton">
+
+            <button
+                class="account-button"
+                id="accountButton"
+            >
                 👤 Account
             </button>
 
-            <button class="logout-button" id="logoutButton">
+
+            <button
+                class="logout-button"
+                id="logoutButton"
+            >
                 ↪ Logout
             </button>
+
         </div>
 
     </aside>
 
-    <!-- MAIN -->
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main class="main">
+
+
+        <!-- TOP BAR -->
 
         <header class="topbar">
 
             <div class="topbar-title">
                 Smart IT Support
             </div>
+
 
             <div class="provider">
 
@@ -604,15 +1115,26 @@
                 </label>
 
                 <select id="providerSelect">
-                    <option value="groq">Groq</option>
-                    <option value="openai">OpenAI</option>
+
+                    <option value="groq">
+                        Groq
+                    </option>
+
+                    <option value="openai">
+                        OpenAI
+                    </option>
+
                 </select>
 
             </div>
 
         </header>
 
+
+        <!-- CONTENT -->
+
         <section class="content">
+
 
             <!-- WELCOME -->
 
@@ -620,31 +1142,36 @@
 
                 <img
                     class="welcome-logo"
-                    src="{{ url_for('static', filename='fixflow-logo.png') }}"
-                    alt="FixFlow-AI"
+                    src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+                    alt="OneTapSolve AI"
                 >
 
                 <h1>
+
                     Welcome to
+
                     <span class="gradient-text">
-                        FixFlow-AI
+                        OneTapSolve AI
                     </span>
+
                 </h1>
 
                 <p>
                     Your smart IT support assistant.
-                    Get simple, step-by-step help with computers,
-                    networks, software, devices, security, and more.
+                    Get simple, step-by-step help with
+                    computers, networks, software,
+                    devices, security, and more.
                 </p>
 
             </div>
+
 
             <!-- CATEGORIES -->
 
             <div class="section-heading">
 
                 <h2>
-                    What can FixFlow-AI help with?
+                    What can OneTapSolve AI help with?
                 </h2>
 
                 <span>
@@ -653,13 +1180,18 @@
 
             </div>
 
+
             <div class="categories">
+
 
                 <button
                     class="category"
                     data-prompt="My computer or laptop is having a problem."
                 >
-                    <div class="category-icon">💻</div>
+
+                    <div class="category-icon">
+                        💻
+                    </div>
 
                     <strong>
                         Computer & Device
@@ -669,93 +1201,39 @@
                         Slow computers, startup problems,
                         keyboards, mice and more.
                     </span>
+
                 </button>
+
 
                 <button
                     class="category"
-                    data-prompt="I am having an internet or network problem."
+                    data-prompt="I am having a problem with my network or internet connection."
                 >
-                    <div class="category-icon">🌐</div>
+
+                    <div class="category-icon">
+                        🌐
+                    </div>
 
                     <strong>
-                        Internet & Network
+                        Network & Internet
                     </strong>
 
                     <span>
-                        Wi-Fi, internet, router, DNS
-                        and connection problems.
+                        Wi-Fi, internet, connectivity,
+                        routers and network problems.
                     </span>
+
                 </button>
 
-                <button
-                    class="category"
-                    data-prompt="I am having a printer or scanner problem."
-                >
-                    <div class="category-icon">🖨️</div>
-
-                    <strong>
-                        Printers & Scanners
-                    </strong>
-
-                    <span>
-                        Offline printers, printing errors,
-                        drivers and scanners.
-                    </span>
-                </button>
-
-                <button
-                    class="category"
-                    data-prompt="I am having an audio or video problem."
-                >
-                    <div class="category-icon">🔊</div>
-
-                    <strong>
-                        Audio & Video
-                    </strong>
-
-                    <span>
-                        Microphones, speakers, cameras,
-                        headphones and video.
-                    </span>
-                </button>
-
-                <button
-                    class="category"
-                    data-prompt="I need help with my phone or another device."
-                >
-                    <div class="category-icon">📱</div>
-
-                    <strong>
-                        Phones & Devices
-                    </strong>
-
-                    <span>
-                        Bluetooth, device setup,
-                        connections and file transfers.
-                    </span>
-                </button>
-
-                <button
-                    class="category"
-                    data-prompt="I have an IT security concern and need help."
-                >
-                    <div class="category-icon">🔐</div>
-
-                    <strong>
-                        Security
-                    </strong>
-
-                    <span>
-                        Phishing, suspicious emails,
-                        malware concerns and safety.
-                    </span>
-                </button>
 
                 <button
                     class="category"
                     data-prompt="I am having a problem with software or an application."
                 >
-                    <div class="category-icon">📧</div>
+
+                    <div class="category-icon">
+                        📧
+                    </div>
 
                     <strong>
                         Software & Apps
@@ -765,13 +1243,18 @@
                         Crashes, installation, updates,
                         browsers and Office.
                     </span>
+
                 </button>
+
 
                 <button
                     class="category"
                     data-prompt="I need help with an account or cloud service."
                 >
-                    <div class="category-icon">☁️</div>
+
+                    <div class="category-icon">
+                        ☁️
+                    </div>
 
                     <strong>
                         Accounts & Cloud
@@ -781,9 +1264,11 @@
                         Login issues, cloud storage,
                         syncing and accounts.
                     </span>
+
                 </button>
 
             </div>
+
 
             <!-- COMMON PROBLEMS -->
 
@@ -799,77 +1284,104 @@
 
             </div>
 
+
             <div class="problems">
+
 
                 <button
                     class="problem"
                     data-prompt="My computer has no internet."
                 >
-                    <span class="problem-icon">🌐</span>
+                    <span class="problem-icon">
+                        🌐
+                    </span>
                     No internet
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="My computer is running very slowly."
                 >
-                    <span class="problem-icon">🐌</span>
+                    <span class="problem-icon">
+                        🐌
+                    </span>
                     Slow computer
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="My printer is not printing."
                 >
-                    <span class="problem-icon">🖨️</span>
+                    <span class="problem-icon">
+                        🖨️
+                    </span>
                     Printer not working
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="My computer has no sound."
                 >
-                    <span class="problem-icon">🔇</span>
+                    <span class="problem-icon">
+                        🔇
+                    </span>
                     No sound
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="My Wi-Fi keeps disconnecting."
                 >
-                    <span class="problem-icon">📶</span>
+                    <span class="problem-icon">
+                        📶
+                    </span>
                     Wi-Fi disconnecting
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="An application keeps crashing."
                 >
-                    <span class="problem-icon">⚠️</span>
+                    <span class="problem-icon">
+                        ⚠️
+                    </span>
                     App crashing
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="My computer will not turn on."
                 >
-                    <span class="problem-icon">🔌</span>
+                    <span class="problem-icon">
+                        🔌
+                    </span>
                     Computer won't turn on
                 </button>
+
 
                 <button
                     class="problem"
                     data-prompt="I received a suspicious email and I am worried it may be phishing."
                 >
-                    <span class="problem-icon">🔐</span>
+                    <span class="problem-icon">
+                        🔐
+                    </span>
                     Suspicious email
                 </button>
 
             </div>
 
+
             <!-- CHAT -->
 
             <div id="chat"></div>
+
 
         </section>
 
@@ -877,7 +1389,10 @@
 
 </div>
 
-<!-- MESSAGE COMPOSER -->
+
+<!-- =========================
+     MESSAGE COMPOSER
+========================= -->
 
 <div class="composer">
 
@@ -889,6 +1404,7 @@
             rows="1"
         ></textarea>
 
+
         <button
             id="sendButton"
             title="Send"
@@ -898,14 +1414,23 @@
 
     </div>
 
+
     <div class="composer-note">
-        FixFlow-AI can make mistakes.
-        Always verify important security or system changes.
+
+        OneTapSolve AI can make mistakes.
+        Always verify important security
+        or system changes.
+
     </div>
 
 </div>
 
+
 <script>
+
+    /* =========================
+       ELEMENTS
+    ========================= */
 
     const chat =
         document.getElementById("chat");
@@ -922,16 +1447,21 @@
     const providerSelect =
         document.getElementById("providerSelect");
 
-    let currentConversationId = null;
+    let currentConversationId =
+        null;
 
-    let isSending = false;
+    let isSending =
+        false;
 
 
     /* =========================
        ADD MESSAGE
     ========================= */
 
-    function addMessage(role, content) {
+    function addMessage(
+        role,
+        content
+    ) {
 
         const row =
             document.createElement("div");
@@ -939,11 +1469,13 @@
         row.className =
             `message ${role}`;
 
+
         const avatar =
             document.createElement("div");
 
         avatar.className =
             "avatar";
+
 
         if (role === "assistant") {
 
@@ -951,10 +1483,10 @@
                 document.createElement("img");
 
             img.src =
-                "{{ url_for('static', filename='fixflow-logo.png') }}";
+                "{{ url_for('static', filename='onetapsolve-logo.png') }}";
 
             img.alt =
-                "FixFlow-AI";
+                "OneTapSolve AI";
 
             avatar.appendChild(img);
 
@@ -965,6 +1497,7 @@
 
         }
 
+
         const bubble =
             document.createElement("div");
 
@@ -974,39 +1507,58 @@
         bubble.textContent =
             content;
 
+
         if (role === "user") {
 
-            row.appendChild(bubble);
-            row.appendChild(avatar);
+            row.appendChild(
+                bubble
+            );
+
+            row.appendChild(
+                avatar
+            );
 
         } else {
 
-            row.appendChild(avatar);
-            row.appendChild(bubble);
+            row.appendChild(
+                avatar
+            );
+
+            row.appendChild(
+                bubble
+            );
 
         }
 
+
         chat.appendChild(row);
 
+
         window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth"
+            top:
+                document.body.scrollHeight,
+
+            behavior:
+                "smooth"
         });
+
     }
 
 
     /* =========================
-       WELCOME
+       WELCOME MESSAGE
     ========================= */
 
     function showWelcome() {
 
-        chat.innerHTML = "";
+        chat.innerHTML =
+            "";
 
         addMessage(
             "assistant",
-            "Hi! I'm FixFlow-AI. Tell me what IT problem you're experiencing, and I'll guide you through it step by step."
+            "Hi! I'm OneTapSolve AI. Tell me what IT problem you're experiencing, and I'll guide you through it step by step."
         );
+
     }
 
 
@@ -1021,19 +1573,22 @@
 
         messageInput.focus();
 
+
         messageInput.style.height =
             "auto";
+
 
         messageInput.style.height =
             Math.min(
                 messageInput.scrollHeight,
                 130
             ) + "px";
+
     }
 
 
     /* =========================
-       HISTORY
+       LOAD HISTORY
     ========================= */
 
     async function loadHistory() {
@@ -1041,13 +1596,18 @@
         try {
 
             const response =
-                await fetch("/history");
+                await fetch(
+                    "/history"
+                );
+
 
             const data =
                 await response.json();
 
+
             historyContainer.innerHTML =
                 "";
+
 
             if (
                 !data.conversations ||
@@ -1055,16 +1615,12 @@
             ) {
 
                 const empty =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
-                empty.style.color =
-                    "#617a97";
-
-                empty.style.fontSize =
-                    "12px";
-
-                empty.style.padding =
-                    "10px";
+                empty.className =
+                    "empty-history";
 
                 empty.textContent =
                     "No previous sessions yet.";
@@ -1075,6 +1631,7 @@
 
                 return;
             }
+
 
             data.conversations.forEach(
                 conversation => {
@@ -1087,22 +1644,28 @@
                     button.className =
                         "history-item";
 
+
                     button.textContent =
                         conversation.title ||
                         "IT Support Session";
 
+
                     button.addEventListener(
                         "click",
                         () => {
+
                             loadConversation(
                                 conversation.id
                             );
+
                         }
                     );
+
 
                     historyContainer.appendChild(
                         button
                     );
+
                 }
             );
 
@@ -1112,7 +1675,16 @@
                 "History error:",
                 error
             );
+
+            historyContainer.innerHTML =
+                `
+                <div class="empty-history">
+                    Unable to load history.
+                </div>
+                `;
+
         }
+
     }
 
 
@@ -1120,7 +1692,9 @@
        LOAD CONVERSATION
     ========================= */
 
-    async function loadConversation(id) {
+    async function loadConversation(
+        id
+    ) {
 
         try {
 
@@ -1129,18 +1703,35 @@
                     `/history/${id}`
                 );
 
+
             const data =
                 await response.json();
 
+
             if (!response.ok) {
+
                 return;
             }
+
 
             currentConversationId =
                 id;
 
+
             chat.innerHTML =
                 "";
+
+
+            if (
+                !data.messages ||
+                data.messages.length === 0
+            ) {
+
+                showWelcome();
+
+                return;
+            }
+
 
             data.messages.forEach(
                 message => {
@@ -1149,8 +1740,18 @@
                         message.role,
                         message.content
                     );
+
                 }
             );
+
+
+            window.scrollTo({
+                top:
+                    document.body.scrollHeight,
+
+                behavior:
+                    "smooth"
+            });
 
         } catch (error) {
 
@@ -1158,7 +1759,9 @@
                 "Conversation error:",
                 error
             );
+
         }
+
     }
 
 
@@ -1171,15 +1774,20 @@
         currentConversationId =
             null;
 
+
         showWelcome();
+
 
         messageInput.value =
             "";
 
+
         messageInput.style.height =
             "auto";
 
+
         messageInput.focus();
+
     }
 
 
@@ -1192,44 +1800,56 @@
         const message =
             messageInput.value.trim();
 
+
         if (
             !message ||
             isSending
         ) {
+
             return;
         }
+
 
         isSending =
             true;
 
+
         sendButton.disabled =
             true;
+
 
         addMessage(
             "user",
             message
         );
 
+
         messageInput.value =
             "";
 
+
         messageInput.style.height =
             "auto";
+
 
         const typing =
             document.createElement(
                 "div"
             );
 
+
         typing.className =
             "typing";
 
+
         typing.textContent =
-            "FixFlow-AI is thinking...";
+            "OneTapSolve AI is thinking...";
+
 
         chat.appendChild(
             typing
         );
+
 
         try {
 
@@ -1237,27 +1857,32 @@
                 await fetch(
                     "/chat",
                     {
-                        method: "POST",
+                        method:
+                            "POST",
 
                         headers: {
                             "Content-Type":
                                 "application/json"
                         },
 
-                        body: JSON.stringify({
-                            message:
-                                message,
+                        body:
+                            JSON.stringify({
+                                message:
+                                    message,
 
-                            conversation_id:
-                                currentConversationId
-                        })
+                                conversation_id:
+                                    currentConversationId
+                            })
                     }
                 );
+
 
             const data =
                 await response.json();
 
+
             typing.remove();
+
 
             if (!response.ok) {
 
@@ -1270,10 +1895,17 @@
                 return;
             }
 
+
             currentConversationId =
                 data.conversation_id;
 
-            addMessage("assistant", data.answer);
+
+            addMessage(
+                "assistant",
+                data.answer ||
+                "I received your request."
+            );
+
 
             await loadHistory();
 
@@ -1281,12 +1913,15 @@
 
             typing.remove();
 
+
             addMessage(
                 "assistant",
-                "I couldn't connect to the FixFlow-AI server. Please make sure the Flask app is running."
+                "I couldn't connect to the OneTapSolve AI server. Please make sure the Flask app is running."
             );
 
+
             console.error(
+                "Chat error:",
                 error
             );
 
@@ -1295,42 +1930,53 @@
             isSending =
                 false;
 
+
             sendButton.disabled =
                 false;
 
+
             messageInput.focus();
+
         }
+
     }
 
 
     /* =========================
-       CATEGORY BUTTONS
-       NOW SEND AUTOMATICALLY
+       QUICK HELP BUTTONS
     ========================= */
 
     document
         .querySelectorAll(
             ".category[data-prompt], .problem[data-prompt]"
         )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                async () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    const prompt =
-                        button.dataset.prompt;
+                        const prompt =
+                            button.dataset.prompt;
 
-                    setInput(prompt);
 
-                    await sendMessage();
-                }
-            );
-        });
+                        setInput(
+                            prompt
+                        );
+
+
+                        await sendMessage();
+
+                    }
+                );
+
+            }
+        );
 
 
     /* =========================
-       PROVIDER
+       LOAD PROVIDER
     ========================= */
 
     async function loadProvider() {
@@ -1338,15 +1984,20 @@
         try {
 
             const response =
-                await fetch("/provider");
+                await fetch(
+                    "/provider"
+                );
+
 
             const data =
                 await response.json();
+
 
             if (data.provider) {
 
                 providerSelect.value =
                     data.provider;
+
             }
 
         } catch (error) {
@@ -1355,9 +2006,15 @@
                 "Provider error:",
                 error
             );
+
         }
+
     }
 
+
+    /* =========================
+       CHANGE PROVIDER
+    ========================= */
 
     providerSelect.addEventListener(
         "change",
@@ -1368,17 +2025,19 @@
                 await fetch(
                     "/provider",
                     {
-                        method: "POST",
+                        method:
+                            "POST",
 
                         headers: {
                             "Content-Type":
                                 "application/json"
                         },
 
-                        body: JSON.stringify({
-                            provider:
-                                providerSelect.value
-                        })
+                        body:
+                            JSON.stringify({
+                                provider:
+                                    providerSelect.value
+                            })
                     }
                 );
 
@@ -1388,7 +2047,9 @@
                     "Provider update error:",
                     error
                 );
+
             }
+
         }
     );
 
@@ -1419,7 +2080,9 @@
                 event.preventDefault();
 
                 sendMessage();
+
             }
+
         }
     );
 
@@ -1435,17 +2098,19 @@
             messageInput.style.height =
                 "auto";
 
+
             messageInput.style.height =
                 Math.min(
                     messageInput.scrollHeight,
                     130
                 ) + "px";
+
         }
     );
 
 
     /* =========================
-       NEW SESSION
+       NEW SESSION BUTTON
     ========================= */
 
     document
@@ -1459,7 +2124,7 @@
 
 
     /* =========================
-       ACCOUNT
+       ACCOUNT BUTTON
     ========================= */
 
     document
@@ -1472,12 +2137,13 @@
 
                 window.location.href =
                     "/account";
+
             }
         );
 
 
     /* =========================
-       LOGOUT
+       LOGOUT BUTTON
     ========================= */
 
     document
@@ -1486,9 +2152,11 @@
         )
         .addEventListener(
             "click",
-            async () => {
+            () => {
 
-                window.location.href = "/logout";
+                window.location.href =
+                    "/logout";
+
             }
         );
 
@@ -1505,5 +2173,7 @@
 
 </script>
 
+
 </body>
+
 </html>

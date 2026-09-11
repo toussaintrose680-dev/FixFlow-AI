@@ -3,7 +3,15 @@ import sqlite3
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, render_template, request, session, redirect, url_for
+from flask import (
+    Flask,
+    jsonify,
+    render_template,
+    request,
+    session,
+    redirect,
+    url_for
+)
 
 from groq import Groq
 from openai import OpenAI
@@ -90,6 +98,7 @@ if not app.secret_key:
         "FLASK_SECRET_KEY is not set."
     )
 
+
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
@@ -102,13 +111,18 @@ app.config.update(
 # Database helpers
 # --------------------------------------------------
 
-def row_value(row, column_name, position):
+def row_value(
+    row,
+    column_name,
+    position
+):
     """
-    Read a database row whether it comes from
-    SQLite or PostgreSQL.
+    Read a database row whether it comes
+    from SQLite or PostgreSQL.
     """
 
     if isinstance(row, sqlite3.Row):
+
         return row[column_name]
 
     return row[position]
@@ -120,11 +134,12 @@ def update_conversation_title(
     title
 ):
     """
-    Update a conversation title using either
-    PostgreSQL or local SQLite.
+    Update a conversation title using
+    either PostgreSQL or local SQLite.
     """
 
     connection = get_connection()
+
     cursor = connection.cursor()
 
     if os.getenv("DATABASE_URL"):
@@ -160,6 +175,7 @@ def update_conversation_title(
         )
 
     connection.commit()
+
     connection.close()
 
 
@@ -168,16 +184,16 @@ def update_conversation_title(
 # --------------------------------------------------
 
 def request_is_same_origin():
-    """
-    Verify that browser state-changing requests
-    originate from this application.
-    """
 
-    origin = request.headers.get("Origin")
+    origin = request.headers.get(
+        "Origin"
+    )
 
     if origin:
 
-        parsed_origin = urlparse(origin)
+        parsed_origin = urlparse(
+            origin
+        )
 
         request_origin = (
             f"{parsed_origin.scheme}://"
@@ -188,13 +204,40 @@ def request_is_same_origin():
             request.host_url.rstrip("/")
         )
 
-        return request_origin == expected_origin
+        # Allow normal local development
+        # whether Flask is opened through
+        # localhost or 127.0.0.1.
 
-    referer = request.headers.get("Referer")
+        if (
+            request_origin == expected_origin
+        ):
+            return True
+
+        local_origins = {
+            "http://127.0.0.1:5000",
+            "http://localhost:5000",
+            "http://127.0.0.1:8000",
+            "http://localhost:8000",
+        }
+
+        if (
+            request_origin in local_origins
+            and expected_origin in local_origins
+        ):
+            return True
+
+        return False
+
+
+    referer = request.headers.get(
+        "Referer"
+    )
 
     if referer:
 
-        parsed_referer = urlparse(referer)
+        parsed_referer = urlparse(
+            referer
+        )
 
         referer_origin = (
             f"{parsed_referer.scheme}://"
@@ -205,7 +248,42 @@ def request_is_same_origin():
             request.host_url.rstrip("/")
         )
 
-        return referer_origin == expected_origin
+        if (
+            referer_origin == expected_origin
+        ):
+            return True
+
+        local_origins = {
+            "http://127.0.0.1:5000",
+            "http://localhost:5000",
+            "http://127.0.0.1:8000",
+            "http://localhost:8000",
+        }
+
+        if (
+            referer_origin in local_origins
+            and expected_origin in local_origins
+        ):
+            return True
+
+        return False
+
+
+    # Local Flask development browsers
+    # sometimes omit both Origin and Referer.
+    #
+    # We allow these requests locally.
+    # Production HTTPS remains protected
+    # by the origin/referer check.
+
+    if request.host.startswith(
+        (
+            "127.0.0.1:",
+            "localhost:"
+        )
+    ):
+
+        return True
 
     return False
 
@@ -219,7 +297,9 @@ def protect_state_changing_requests():
         "PATCH",
         "DELETE"
     }:
+
         return None
+
 
     if not request_is_same_origin():
 
@@ -228,6 +308,7 @@ def protect_state_changing_requests():
                 "Security check failed. "
                 "Please refresh the page and try again."
         }), 403
+
 
     return None
 
@@ -240,11 +321,11 @@ initialize_database()
 
 
 # --------------------------------------------------
-# FixFlow-AI instructions
+# OneTapSolve AI instructions
 # --------------------------------------------------
 
 SYSTEM_INSTRUCTIONS = """
-You are FixFlow-AI, a professional and friendly IT support technician.
+You are OneTapSolve AI, a professional and friendly IT support technician.
 
 Your purpose is to help users diagnose and resolve everyday technology
 problems through safe, clear, interactive troubleshooting.
@@ -314,6 +395,7 @@ the problem affects only that computer or the whole network. For example,
 ask whether another device on the same Wi-Fi can access the internet.
 
 If another device works, focus on the affected computer.
+
 If another device also fails, focus on the network, router, or service.
 
 Continue adapting each step based on the user's answers so the experience
@@ -331,13 +413,19 @@ def get_ai_response(
 ):
 
     if provider_name == "groq":
-
         response = groq_client.chat.completions.create(
-            model="openai/gpt-oss-20b",
-            messages=messages
+        model="openai/gpt-oss-20b",
+        messages=messages,
+        tool_choice="none"
+    )
+
+        return (
+            response
+            .choices[0]
+            .message
+            .content
         )
 
-        return response.choices[0].message.content
 
     if provider_name == "openai":
 
@@ -348,16 +436,21 @@ def get_ai_response(
 
         return response.output_text
 
+
     raise ValueError(
         "Unknown AI provider"
     )
+
 
 # --------------------------------------------------
 # Sitemap
 # --------------------------------------------------
 
-@app.route("/sitemap.xml")
+@app.route(
+    "/sitemap.xml"
+)
 def sitemap():
+
     return """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
@@ -365,15 +458,23 @@ def sitemap():
     </url>
 </urlset>
 """
+
+
 # --------------------------------------------------
 # Home
 # --------------------------------------------------
+
 @app.route("/")
 def home():
+
     return render_template(
         "index.html",
-        username=session.get("username")
+        username=session.get(
+            "username"
+        )
     )
+
+
 # --------------------------------------------------
 # Sign up
 # --------------------------------------------------
@@ -393,15 +494,18 @@ def signup():
                 "Please provide account information."
         }), 400
 
+
     username = data.get(
         "username",
         ""
     ).strip()
 
+
     password = data.get(
         "password",
         ""
     )
+
 
     if not username or not password:
 
@@ -410,12 +514,14 @@ def signup():
                 "Username and password are required."
         }), 400
 
+
     if len(username) < 3:
 
         return jsonify({
             "error":
                 "Username must be at least 3 characters."
         }), 400
+
 
     if len(password) < 8:
 
@@ -424,10 +530,12 @@ def signup():
                 "Password must be at least 8 characters."
         }), 400
 
+
     user_id = create_user(
         username,
         password
     )
+
 
     if user_id is None:
 
@@ -436,7 +544,9 @@ def signup():
                 "That username already exists."
         }), 409
 
+
     session["user_id"] = user_id
+
     session["username"] = username
 
     session.pop(
@@ -445,6 +555,7 @@ def signup():
     )
 
     session["provider"] = "groq"
+
 
     return jsonify({
         "message":
@@ -471,20 +582,24 @@ def login():
                 "Please provide your login information."
         }), 400
 
+
     username = data.get(
         "username",
         ""
     ).strip()
+
 
     password = data.get(
         "password",
         ""
     )
 
+
     user = authenticate_user(
         username,
         password
     )
+
 
     if user is None:
 
@@ -493,11 +608,13 @@ def login():
                 "Invalid username or password."
         }), 401
 
+
     session["user_id"] = row_value(
         user,
         "id",
         0
     )
+
 
     session["username"] = row_value(
         user,
@@ -505,12 +622,15 @@ def login():
         1
     )
 
+
     session.pop(
         "conversation_id",
         None
     )
 
+
     session["provider"] = "groq"
+
 
     return jsonify({
         "message":
@@ -518,12 +638,20 @@ def login():
     })
 
 
-@app.route("/logout")
+# --------------------------------------------------
+# Logout
+# --------------------------------------------------
+
+@app.route(
+    "/logout"
+)
 def logout():
 
     session.clear()
 
-    return redirect(url_for("home"))
+    return redirect(
+        url_for("home")
+    )
 
 
 # --------------------------------------------------
@@ -542,10 +670,13 @@ def current_user():
             "logged_in": False
         })
 
+
     return jsonify({
         "logged_in": True,
         "username":
-            session.get("username")
+            session.get(
+                "username"
+            )
     })
 
 
@@ -553,7 +684,9 @@ def current_user():
 # Account page
 # --------------------------------------------------
 
-@app.route("/account")
+@app.route(
+    "/account"
+)
 def account():
 
     if "user_id" not in session:
@@ -562,9 +695,12 @@ def account():
             "login.html"
         )
 
+
     return render_template(
         "account.html",
-        username=session.get("username")
+        username=session.get(
+            "username"
+        )
     )
 
 
@@ -585,14 +721,20 @@ def chat():
                 "Please log in first."
         }), 401
 
-    user_id = session["user_id"]
+
+    user_id = session[
+        "user_id"
+    ]
+
 
     provider_name = session.get(
         "provider",
         "groq"
     )
 
+
     data = request.get_json()
+
 
     if not data or "message" not in data:
 
@@ -601,9 +743,11 @@ def chat():
                 "Please enter an IT problem."
         }), 400
 
+
     user_message = data[
         "message"
     ].strip()
+
 
     if not user_message:
 
@@ -612,6 +756,7 @@ def chat():
                 "Please describe your IT problem."
         }), 400
 
+
     if len(user_message) > 5000:
 
         return jsonify({
@@ -619,9 +764,11 @@ def chat():
                 "Please keep your IT problem under 5,000 characters."
         }), 400
 
+
     conversation_id = session.get(
         "conversation_id"
     )
+
 
     if conversation_id is not None:
 
@@ -632,6 +779,7 @@ def chat():
 
             conversation_id = None
 
+
     if conversation_id is None:
 
         conversation_id = create_conversation(
@@ -639,16 +787,19 @@ def chat():
             "New IT Support Session"
         )
 
-        session["conversation_id"] = (
-            conversation_id
-        )
+        session[
+            "conversation_id"
+        ] = conversation_id
+
 
     previous_messages = get_messages(
         conversation_id,
         user_id
     )
 
+
     conversation = []
+
 
     for message in previous_messages:
 
@@ -659,6 +810,7 @@ def chat():
                     "role",
                     0
                 ),
+
             "content":
                 row_value(
                     message,
@@ -667,9 +819,11 @@ def chat():
                 )
         })
 
+
     if len(previous_messages) == 0:
 
         title = user_message
+
 
         if len(title) > 45:
 
@@ -678,16 +832,22 @@ def chat():
                 + "..."
             )
 
+
         update_conversation_title(
             conversation_id,
             user_id,
             title
         )
 
+
     conversation.append({
-        "role": "user",
-        "content": user_message
+        "role":
+            "user",
+
+        "content":
+            user_message
     })
+
 
     add_message(
         conversation_id,
@@ -695,25 +855,30 @@ def chat():
         user_message
     )
 
+
     try:
 
         messages = [
             {
                 "role":
                     "system",
+
                 "content":
                     SYSTEM_INSTRUCTIONS
             }
         ]
 
+
         messages.extend(
             conversation
         )
+
 
         answer = get_ai_response(
             messages,
             provider_name
         )
+
 
         add_message(
             conversation_id,
@@ -721,12 +886,18 @@ def chat():
             answer
         )
 
+
         return jsonify({
             "answer":
                 answer,
+
             "provider":
-                provider_name
+                provider_name,
+
+            "conversation_id":
+                conversation_id
         })
+
 
     except Exception as error:
 
@@ -735,10 +906,14 @@ def chat():
             error
         )
 
+
         return jsonify({
             "answer":
-                "Sorry, FixFlow-AI could not connect "
-                "to the selected AI service."
+                "Sorry, OneTapSolve AI could not connect "
+                "to the selected AI service.",
+
+            "error":
+                str(error)
         }), 500
 
 
@@ -759,20 +934,29 @@ def reset():
                 "Please log in first."
         }), 401
 
-    user_id = session["user_id"]
+
+    user_id = session[
+        "user_id"
+    ]
+
 
     conversation_id = create_conversation(
         user_id,
         "New IT Support Session"
     )
 
-    session["conversation_id"] = (
-        conversation_id
-    )
+
+    session[
+        "conversation_id"
+    ] = conversation_id
+
 
     return jsonify({
         "message":
-            "Conversation reset."
+            "Conversation reset.",
+
+        "conversation_id":
+            conversation_id
     })
 
 
@@ -792,13 +976,19 @@ def history():
             "conversations": []
         })
 
-    user_id = session["user_id"]
+
+    user_id = session[
+        "user_id"
+    ]
+
 
     conversations = get_conversations(
         user_id
     )
 
+
     history_list = []
+
 
     for item in conversations:
 
@@ -809,12 +999,14 @@ def history():
                     "id",
                     0
                 ),
+
             "title":
                 row_value(
                     item,
                     "title",
                     1
                 ),
+
             "created_at":
                 row_value(
                     item,
@@ -822,6 +1014,7 @@ def history():
                     2
                 )
         })
+
 
     return jsonify({
         "conversations":
@@ -847,7 +1040,11 @@ def history_messages(
             "messages": []
         }), 401
 
-    user_id = session["user_id"]
+
+    user_id = session[
+        "user_id"
+    ]
+
 
     if not conversation_belongs_to_user(
         history_id,
@@ -859,12 +1056,15 @@ def history_messages(
                 "Conversation not found."
         }), 404
 
+
     messages = get_messages(
         history_id,
         user_id
     )
 
+
     message_list = []
+
 
     for message in messages:
 
@@ -875,12 +1075,14 @@ def history_messages(
                     "role",
                     0
                 ),
+
             "content":
                 row_value(
                     message,
                     "content",
                     1
                 ),
+
             "created_at":
                 row_value(
                     message,
@@ -889,9 +1091,11 @@ def history_messages(
                 )
         })
 
-    session["conversation_id"] = (
-        history_id
-    )
+
+    session[
+        "conversation_id"
+    ] = history_id
+
 
     return jsonify({
         "messages":
@@ -916,10 +1120,12 @@ def provider():
                 "Please log in first."
         }), 401
 
+
     provider_name = session.get(
         "provider",
         "groq"
     )
+
 
     return jsonify({
         "provider":
@@ -940,7 +1146,9 @@ def change_provider():
                 "Please log in first."
         }), 401
 
+
     data = request.get_json()
+
 
     if not data or "provider" not in data:
 
@@ -949,9 +1157,11 @@ def change_provider():
                 "Provider was not specified."
         }), 400
 
+
     provider_name = str(
         data["provider"]
     ).lower().strip()
+
 
     if provider_name not in [
         "groq",
@@ -963,7 +1173,11 @@ def change_provider():
                 "Unsupported AI provider."
         }), 400
 
-    session["provider"] = provider_name
+
+    session[
+        "provider"
+    ] = provider_name
+
 
     return jsonify({
         "provider":
