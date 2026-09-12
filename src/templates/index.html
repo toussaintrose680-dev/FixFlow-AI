@@ -1884,16 +1884,65 @@
             typing.remove();
 
 
-            if (!response.ok) {
+           if (!response.ok) {
 
-                addMessage(
-                    "assistant",
-                    data.error ||
-                    "Something went wrong. Please try again."
-                );
+    if (response.status === 403) {
 
-                return;
-            }
+        let errorData = {};
+
+        try {
+
+            errorData =
+                await response.json();
+
+        } catch (error) {
+
+            console.error(
+                "Error reading server response:",
+                error
+            );
+
+        }
+
+
+        if (errorData.guest_limit_reached) {
+
+          addMessage(
+    "assistant",
+    "You've used your 3 free questions. " +
+    "Please create a free account or sign in " +
+    "to continue using OneTapSolve AI.<br><br>" +
+
+    '<button onclick="window.location.href=\'/login\'" ' +
+    'style="padding:10px 16px; margin-right:8px; border:none; ' +
+    'border-radius:8px; cursor:pointer;">' +
+    'Create Free Account / Sign In' +
+    '</button>'
+);
+
+} else {
+
+    addMessage(
+        "assistant",
+        errorData.answer ||
+        "You've used your 3 free questions. " +
+        "Please create a free account or sign in " +
+        "to continue using OneTapSolve AI."
+    );
+
+}
+
+return;
+}
+
+
+    addMessage(
+        "assistant",
+        "Something went wrong. Please try again."
+    );
+
+    return;
+}
 
 
             currentConversationId =
