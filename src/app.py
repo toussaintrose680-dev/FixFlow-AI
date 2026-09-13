@@ -528,6 +528,9 @@ def get_ai_response(
 @app.route(
     "/sitemap.xml"
 )
+@app.route("/about")
+def about():
+    return render_template("about.html")
 def sitemap():
 
     return """<?xml version="1.0" encoding="UTF-8"?>
@@ -757,7 +760,7 @@ def current_user():
                 "username"
             )
     })
-    
+
 # --------------------------------------------------
 # Account page
 # --------------------------------------------------
