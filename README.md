@@ -1,10 +1,10 @@
-# FixFlow-AI
+# FixFloOneTapSolve AI
 
-FixFlow-AI is an AI-powered IT support assistant designed to help users troubleshoot common technical problems quickly and easily.
+OneTapSolve AI is an AI-powered IT support assistant designed to help users troubleshoot common technical problems quickly and easily.
 
 ## Project Goal
 
-The goal of FixFlow-AI is to provide clear, step-by-step solutions to common IT issues while making technical support easier and more accessible.
+The goal of OneTapSolve AI is to provide clear, step-by-step solutions to common IT issues while making technical support easier and more accessible.
 
 ## Planned Features
 
