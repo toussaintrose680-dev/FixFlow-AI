@@ -1,4 +1,4 @@
-# FixFloOneTapSolve AI
+# # OneTapSolve AI
 
 OneTapSolve AI is an AI-powered IT support assistant designed to help users troubleshoot common technical problems quickly and easily.
 
