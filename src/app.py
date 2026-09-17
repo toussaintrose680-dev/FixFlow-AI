@@ -522,16 +522,19 @@ def get_ai_response(
 
 
 # --------------------------------------------------
-# Sitemap
+# Portfolio
 # --------------------------------------------------
+@app.route("/portfolio")
+def portfolio():
+    return render_template("portfolio.html")
 
-@app.route(
-    "/sitemap.xml"
-)
+
+# --------------------------------------------------
+# About
+# --------------------------------------------------
 @app.route("/about")
 def about():
     return render_template("about.html")
-def sitemap():
 
     return """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -555,6 +558,10 @@ def home():
             "username"
         )
     )
+
+# --------------------------------------------------
+# Portfolio
+# --------------------------------------------------
 
 
 # --------------------------------------------------

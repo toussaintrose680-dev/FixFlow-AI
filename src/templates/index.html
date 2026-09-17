@@ -1583,7 +1583,32 @@
 
         messageInput.style.height =
             "auto";
+/* ABOUT BUTTON */
 
+.about-button {
+    display: block;
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+
+    background: transparent;
+    border: none;
+
+    color: #b8c7dc;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+
+    cursor: pointer;
+    border-radius: 8px;
+
+    transition: 0.3s ease;
+}
+
+.about-button:hover {
+    background: #10233d;
+    color: white;
+}
 
         messageInput.style.height =
             Math.min(
@@ -2214,7 +2239,37 @@ if (!response.ok) {
     loadProvider();
 
 </script>
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
 
+    <h2>Contact Me</h2>
+
+    <p>
+        I'd love to connect and discuss technology, IT support,
+        cloud computing, and opportunities to grow professionally.
+    </p>
+
+    <div class="contact-links">
+
+        <a href="mailto:YOUR-EMAIL@example.com">
+            📧 Email Me
+        </a>
+
+        <a href="https://www.linkedin.com/" target="_blank">
+            💼 LinkedIn
+        </a>
+
+        <a href="https://github.com/" target="_blank">
+            💻 GitHub
+        </a>
+
+        <a href="/resume">
+            📄 Resume
+        </a>
+
+    </div>
+
+</section>
 
 </body>
 

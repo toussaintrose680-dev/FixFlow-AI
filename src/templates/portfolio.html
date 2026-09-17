@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Roselene Toussaint | IT Portfolio</title>
+
+    <meta name="description"
+          content="Roselene Toussaint's Information Technology portfolio featuring OneTapSolve AI, IT support, troubleshooting, testing, and technical skills.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #07111f;
+    color: #f5f9ff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 16px 7%;
+
+            background: rgba(7, 17, 31, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-brand {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-brand span {
+            color: #16c9ff;
+        }
+
+        nav a {
+            color: #b8cbe0;
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #16c9ff;
+        }
+
+        .hero {
+            min-height: 75vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 80px 25px;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #17345c 0%,
+                    transparent 45%
+                );
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 64px);
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    90deg,
+                    #16c9ff,
+                    #7d6bff,
+                    #e45cff
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 23px;
+            font-weight: normal;
+            color: #b5c9df;
+            margin: 18px 0;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: auto;
+            color: #8ea8c7;
+            font-size: 17px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 24px;
+            margin: 6px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #16c9ff,
+                    #1677ff
+                );
+
+            color: white;
+        }
+
+        .button.secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .section {
+            max-width: 1050px;
+            margin: auto;
+            padding: 80px 25px;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #8ea8c7;
+        }
+
+        .about-card,
+        .project-card,
+        .skill-card {
+            background:
+                rgba(13, 29, 49, 0.85);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .about-card p {
+            color: #c2d2e4;
+        }
+
+        .project-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 30px;
+    align-items: start;
+    margin-bottom: 25px;
+}
+
+        .project-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+.project-status {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    border-radius: 20px;
+    background: rgba(228, 92, 255, 0.12);
+    border: 1px solid rgba(228, 92, 255, 0.3);
+    color: #e45cff;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.project-icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(22, 201, 255, 0.08);
+    border: 1px solid rgba(22, 201, 255, 0.2);
+    font-size: 42px;
+}
+        .project-card h3 {
+            margin-top: 0;
+            font-size: 26px;
+        }
+
+        .project-card p {
+            color: #aebfd3;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .skill-card {
+            padding: 22px;
+        }
+
+        .skill-card h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        .skill-card p {
+            color: #8ea8c7;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.08);
+
+            color: #6f87a5;
+            font-size: 13px;
+        }
+
+        @media (max-width: 750px) {
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .project-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .project-logo {
+                margin: auto;
+            }
+
+            .skills {
+                grid-template-columns: 1fr;
+            }
+        }
+    /* CONTACT SECTION */
+
+.contact-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 7%;
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.contact-section p {
+    color: #9fc5f5;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.contact-links a {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 1px solid #1f9ed1;
+    border-radius: 8px;
+    color: #9fc5f5;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.contact-links a:hover {
+    background: #1f9ed1;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <div class="nav-brand">
+            Roselene <span>Toussaint</span>
+        </div>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="#project">projects</a>
+            <a href="#skills">Skills</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <img
+                src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+                alt="OneTapSolve AI"
+                class="hero-logo"
+            >
+
+            <h1>
+                Hi, I'm
+                <span class="gradient-text">
+                    Roselene Toussaint
+                </span>
+            </h1>
+
+            <h2>
+                Information Technology Student | IT Support | QA & Testing
+            </h2>
+
+            <p>
+                I am an Information Technology student passionate about
+                troubleshooting, system validation, technology support,
+                and building practical solutions that improve the user
+                experience.
+            </p>
+
+            <div class="buttons">
+
+                <a href="#project" class="button">
+                    View My Project
+                </a>
+
+                <a href="/about" class="button secondary">
+                    About Me
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+   <!-- PROJECTS -->
+
+<section class="section" id="projects">
+
+    <h2>Projects</h2>
+
+    <p class="section-intro">
+        Hands-on technology projects demonstrating application
+        development, troubleshooting, testing, problem solving,
+        and user-focused design.
+    </p>
+
+
+    <!-- ONETAPSOLVE AI -->
+
+    <div class="project-card">
+
+        <img
+            src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+            alt="OneTapSolve AI logo"
+            class="project-logo"
+        >
+
+        <div>
+
+            <h3>
+                OneTapSolve AI
+            </h3>
+
+            <p>
+                OneTapSolve AI is an AI-powered IT support platform
+                designed to help users troubleshoot everyday
+                technology problems through simple, guided,
+                step-by-step assistance.
+            </p>
+
+            <p>
+                I developed and tested the application using
+                Python, Flask, HTML, CSS, database functionality,
+                and AI API integrations.
+            </p>
+
+            <p>
+                The project has given me hands-on experience with
+                application workflows, authentication, API
+                integration, troubleshooting, error investigation,
+                testing, documentation, and user-focused design.
+            </p>
+
+            <a href="/" class="button">
+                Try OneTapSolve AI
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHATTERNEST -->
+
+    <div class="project-card">
+
+        <div class="project-icon">
+            💬
+        </div>
+
+        <div>
+
+            <span class="project-status">
+                🚧 In Progress
+            </span>
+
+            <h3>
+                ChatterNest
+            </h3>
+
+            <p>
+                ChatterNest is a social media application I am
+                developing with Flutter and Firebase. The goal is
+                to allow users to create posts, interact with other
+                users through likes and comments, and manage their
+                own profiles.
+            </p>
+
+            <p>
+                <strong>Technologies:</strong>
+                Flutter, Dart, Firebase Authentication,
+                Cloud Firestore, Firebase Storage, and
+                image_picker.
+            </p>
+
+            <p>
+                <strong>Completed:</strong>
+                User registration and login, user dashboard,
+                Chatter posts, likes, comments, user profiles,
+                profile editing, display names, bios, profile
+                picture selection, and Firebase profile-picture
+                storage.
+            </p>
+
+            <p>
+                <strong>Currently Working On:</strong>
+                Expanding social features, improving the user
+                experience, and connecting additional functionality
+                to the Firebase backend.
+            </p>
+
+            <p>
+                This project has given me hands-on experience with
+                Flutter application development, Firebase
+                Authentication, Firestore, Firebase Storage,
+                image uploads, database integration, and building
+                interactive social-media features.
+            </p>
+<!-- ChatterNest Screenshots -->
+<div class="project-gallery">
+
+    <img src="{{ url_for('static', filename='images/chatternest-feed.jpg') }}"
+         alt="ChatterNest Community Feed">
+
+    <img src="{{ url_for('static', filename='images/chatternest-login.jpg') }}"
+         alt="ChatterNest Sign In Page">
+
+    <img src="{{ url_for('static', filename='images/chatternest-notifications.jpg') }}"
+         alt="ChatterNest Notifications">
+
+</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+    <!-- PROJECT -->
+
+    <section class="section" id="project">
+
+        <h2>Featured Project</h2>
+
+        <p class="section-intro">
+            A hands-on technology project demonstrating application
+            development, troubleshooting, testing, and problem solving.
+        </p>
+
+        <div class="project-card">
+
+            <img
+                src="{{ url_for('static', filename='onetapsolve-logo.png') }}"
+                alt="OneTapSolve AI logo"
+                class="project-logo"
+            >
+
+            <div>
+
+                <h3>
+                    OneTapSolve AI
+                </h3>
+
+                <p>
+                    OneTapSolve AI is an AI-powered IT support platform
+                    designed to help users troubleshoot everyday
+                    technology problems through simple, guided,
+                    step-by-step assistance.
+                </p>
+
+                <p>
+                    I developed and tested the application using
+                    Python, Flask, HTML, CSS, database functionality,
+                    and AI API integrations.
+                </p>
+
+                <p>
+                    The project has given me hands-on experience with
+                    application workflows, authentication, API
+                    integration, troubleshooting, error investigation,
+                    testing, documentation, and user-focused design.
+                </p>
+
+                <a href="/" class="button">
+                    Try OneTapSolve AI
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section class="section" id="skills">
+
+        <h2>Technical Skills</h2>
+
+        <p class="section-intro">
+            Skills developed through academic coursework, hands-on IT
+            experience, and technical projects.
+        </p>
+
+        <div class="skills">
+
+            <div class="skill-card">
+
+                <h3>QA & Testing</h3>
+
+                <p>
+                    Functional testing, system validation, UAT support,
+                    defect identification, test documentation, and
+                    troubleshooting.
+                </p>
+
+            </div>
+
+
+            <div class="skill-card">
+
+                <h3>IT Support</h3>
+
+                <p>
+                    Technical support, root cause analysis, ticketing
+                    systems, user support, authentication, and access
+                    management.
+                </p>
+
+            </div>
+
+
+            <div class="skill-card">
+
+                <h3>Networking & Security</h3>
+
+                <p>
+                    Networking fundamentals, Wi-Fi troubleshooting,
+                    security concepts, MFA, IAM, protocol analysis,
+                    and basic cybersecurity.
+                </p>
+
+            </div>
+
+
+            <div class="skill-card">
+
+                <h3>Cloud & Virtualization</h3>
+
+                <p>
+                    Cloud concepts, storage concepts, virtualization
+                    administration, and data center technologies.
+                </p>
+
+            </div>
+
+
+            <div class="skill-card">
+
+                <h3>Development</h3>
+
+                <p>
+                    Python, Flask, HTML, CSS, API integrations,
+                    database functionality, Git, and GitHub.
+                </p>
+
+            </div>
+
+
+            <div class="skill-card">
+
+                <h3>Professional Skills</h3>
+
+                <p>
+                    Analytical thinking, attention to detail,
+                    documentation, communication, problem solving,
+                    and customer support.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+   </section>
+<!-- CONTACT -->
+
+<section id="contact" class="contact-section">
+
+    <h2>Contact Me</h2>
+
+    <p>
+        I'd love to connect and discuss technology,
+        IT support, cloud computing, QA, and opportunities
+        to grow professionally.
+    </p>
+
+    <div class="contact-links">
+
+    <a href="mailto:rosiemix@live.com"> 
+        📧 Email Me
+    </a>
+
+    <a href="mailto:rtoussa0@email.cpcc.edu">
+        📧 Email Me
+    </a>
+
+    <a href="https://www.linkedin.com/in/roselene-toussaint-497717304/"
+       target="_blank">
+        💼 LinkedIn
+    </a>
+
+    <a href="https://github.com/toussaintrose680-dev"
+       target="_blank">
+        💻 GitHub
+    </a>
+<a href="/" class="back-home">
+    ← Back to Home
+</a>
+
+<!-- FOOTER -->
+
+<footer>
+    © 2026 Roselene Toussaint |
+    OneTapSolve AI Portfolio
+</footer>
+    <!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Roselene Toussaint |
+        OneTapSolve AI Portfolio
+
+    </footer>
+
+</body>
+
+</html>
