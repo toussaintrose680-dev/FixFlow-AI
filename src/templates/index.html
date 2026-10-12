@@ -1022,7 +1022,8 @@
         position: fixed;
         top: 12px;
         left: 12px;
-        
+                z-index: 999999;
+        pointer-events: auto;
         padding: 10px 14px;
         background: #1677ff;
         color: white;
@@ -1093,6 +1094,7 @@
     <a href="/">🏠 Home / AI Chat</a>
     <a href="/about">ℹ️ About</a>
     <a href="/portfolio">💼 Portfolio</a>
+    <a href="/privacy">🔒 Privacy Policy</a>
     <a href="/login">👤 Login / Account</a>
 </nav>
     <aside class="sidebar">
@@ -1143,6 +1145,12 @@
 
 
       <div class="sidebar-bottom">
+        <button
+    class="privacy-button"
+    onclick="window.location.href='/privacy'"
+>
+    🔒 Privacy Policy
+</button>
 
             <button
                 class="about-button"

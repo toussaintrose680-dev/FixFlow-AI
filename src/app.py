@@ -527,8 +527,15 @@ def get_ai_response(
 @app.route("/portfolio")
 def portfolio():
     return render_template("portfolio.html")
+# --------------------------------------------------
+# Privacy Policy
+# --------------------------------------------------
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
 
+# --------------------------------------------------
 # --------------------------------------------------
 # About
 # --------------------------------------------------
@@ -536,13 +543,28 @@ def portfolio():
 def about():
     return render_template("about.html")
 
-    return """<?xml version="1.0" encoding="UTF-8"?>
+
+# --------------------------------------------------
+# Sitemap for Google Search Console
+# --------------------------------------------------
+@app.route("/sitemap.xml")
+def sitemap():
+    from flask import Response
+
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://fixflowitsupport.com/</loc>
     </url>
-</urlset>
-"""
+    <url>
+        <loc>https://fixflowitsupport.com/about</loc>
+    </url>
+    <url>
+        <loc>https://fixflowitsupport.com/portfolio</loc>
+    </url>
+</urlset>"""
+
+    return Response(xml, mimetype="application/xml")
 
 
 # --------------------------------------------------
