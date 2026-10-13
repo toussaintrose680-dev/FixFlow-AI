@@ -527,6 +527,17 @@ def get_ai_response(
 @app.route("/portfolio")
 def portfolio():
     return render_template("portfolio.html")
+    
+# Google AdSense ads.txt verification
+@app.route("/ads.txt")
+def ads_txt():
+    from flask import send_from_directory
+    return send_from_directory(
+        app.root_path,
+        "ads.txt",
+        mimetype="text/plain"
+    )
+
 # --------------------------------------------------
 # Privacy Policy
 # --------------------------------------------------
